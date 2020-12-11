@@ -1,0 +1,21 @@
+.map{
+    height:2vh;
+    width:2vh;
+    background:1px solid black;
+}
+#palyaTartalmazo{
+    display:grid;
+    grid-template-columns:repeat(10, auto);
+    grid-template-rows:repeat(10,auto);
+    width:20vh;
+    height:20vh;
+    margin:auto;
+    
+}
+
+.szabad{
+    display:grid;
+    background: red;
+    border:1px solid black;
+    margin:1px;
+}
