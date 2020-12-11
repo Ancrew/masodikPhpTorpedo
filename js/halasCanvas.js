@@ -63,7 +63,7 @@ function animate(){
     if(frame > 100){
         frame = 1;
     }
-   tartalom.clearRect(0, 0, tartalom.width, tartalom.height);
+//   tartalom.clearRect(0, 0, tartalom.width, tartalom.height);
     for (var i = 0; i < halak.length; i++) {
 //         console.log(i + "edik hal: " + halak[i].getx());
           halak[i].draw();
