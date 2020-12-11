@@ -7,7 +7,7 @@ halasC.height=canvasMagassag;
 let frame=0;
 let elsoReteg = document.getElementById("elsoReteg");
 let raj = 25;
-let sebesseg = 0.5;
+let sebesseg = 2;
 let randomYPoz = Math.random() * canvasMagassag;
 let tartalom= halasC.getContext("2d");
 //let hal= document.createElement("img");
@@ -39,11 +39,11 @@ let hal = class Hal{
        
         
     }
-    getx(){
+    getx(){                                                                     //teszteléshez használtam
         return this.x;
     }
     draw(){
-        
+        tartalom.clearRect(this.x, this.y, this.width, this.height);            //teszt önmegsemmisítés
         this.x += sebesseg;
         tartalom.drawImage(this.kep,this.x,this.y,this.width,this.height);
         
