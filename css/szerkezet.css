@@ -1,11 +1,17 @@
 body{
-    display:grid;
+    /*display:fixed;*/
+    position:absolute;
+    max-width:98%;
+    overflow-x:hidden;
 }
 
 /*  #tartalmazo{
       display:grid;
 }*/
-
+#halusztato{
+    position:absolute;
+    height: 40vh;
+}
 #hajok{
     display:grid;
     justify-content: space-around;
@@ -122,3 +128,4 @@ body{
 #udvozlo{
  text-align: center;   
 }
+

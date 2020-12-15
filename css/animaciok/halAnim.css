@@ -1,0 +1,69 @@
+.halkep{
+    /*animation: uszas 1s linear infinite;*/
+}
+
+.halacska{
+    position:relative;
+    /*display:inline-block;*/
+     /*transition: 2s ease-in;*/
+    /*transform:*/ 
+        /*translateX(0);*/
+   
+    /*animation: halAmeret 2s linear infinite;*/
+}
+.forgoHal{
+    animation: elfordul 3s ease-in;
+}
+/*.halReset{
+    position:relative;
+    
+    transform: 
+        translateX(0);
+   
+    animation: halAtuszas 10s linear infinite;*/
+/*}
+.kitero{
+    transition: 3s ease-in-out;
+    transform: 
+        
+       translate3d(20.7rem, -2rem, 50rem);
+    
+}*/
+
+@keyframes {
+    0%{
+        transform: rotateX(0deg);
+    }
+    50%{
+        transform:rotateX(45deg);
+    }
+    100%{
+        transform: rotateX(0deg);
+    }
+}
+
+@keyframes uszas{
+    0%{
+     transform: scale(2);
+    }
+    100%{
+        transform: scale(0.4);   
+    }
+}
+@keyframes halAtuszas{
+    0%{
+    transform:  translateX(0vw);
+    }
+    100%{
+        transform: translateX(100vw);   
+    }
+}
+
+@keyframes halAmeret{
+    from {
+   transform: scale(1.0);
+    }
+    to{
+        transform:scale(0.2);
+    }
+}

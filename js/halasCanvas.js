@@ -10,15 +10,19 @@ let raj = 25;
 let sebesseg = 2;
 let randomYPoz = Math.random() * canvasMagassag;
 let tartalom= halasC.getContext("2d");
+fejlec=document.getElementsByTagName("head");
 //let hal= document.createElement("img");
 //hal.src = "svg/hal.svg";
 //hal.id="halkep";
 //let halW = hal.width*0.3;
-//let halH = hal.height*0.3;
+//let halH = hal.height*0.3;ss
 //halasC.appendChild(hal);
 //elsoReteg.appendChild(hal);
 console.log("magassága canvas: " + halasC.height);
-
+// let kepCss = document.createElement("style");
+// kepCss.innerHTML = '.halkep{ border: 10px solid red;}';
+//  document.getElementsByTagName("head")[0].appendChild(kepCss);      
+//        document.body.appendChild(kepCss);
 
 let hal = class Hal{
     
@@ -26,14 +30,22 @@ let hal = class Hal{
         this.x=x;
         this.y=y;
         this.vy = 0;
-        
+        this.szog=0.1;
+        this.halaim = [];
         this.kep = document.createElement("img");
-         this.kep.src = "svg/hal.svg";
-        this.kep.class = "halkep";
-        
-        this.width = this.kep.width * 0.2;
-        this.height = this.kep.height * 0.2;
        
+        this.kep.src = "svg/halam.svg";
+//        this.kep.background = "none";
+        this.className = "halkep";
+        this.width = this.kep.width * 0.6;
+//        this.height = this.kep.height * 0.2;
+        this.height = this.kep.height * 0.6;
+        this.sajatCanvas = document.createElement("CANVAS");
+        
+        this.sajatCanvas.width = this.kep.width;
+        this.sajatCanvas.height = this.kep.height;
+        this.sajatTartalom = this.sajatCanvas.getContext("2d");
+        this.sajatTartalom.drawImage(this.kep,0,0,this.width,this.height);
 //        this.alapHeight=window.innerHeight/5;
 //        this.alapWidth=window.innerWidth;;
        
@@ -43,15 +55,42 @@ let hal = class Hal{
         return this.x;
     }
     draw(){
-        tartalom.clearRect(this.x, this.y, this.width, this.height);            //teszt önmegsemmisítés
+        if (frame % 10 === 0) {
+            if(this.szog < 0.5){
+                this.aktSzog += this.szog;
+            }
+            if(this.szog > 0.5){
+                this.aktSzog -= this.szog;
+            }
+        
+//        this.halaim = document.getElementsByClassName("halkep");
+//            for (var i = 0; i < this.halaim.size; i++) {
+//                this.style="border: 1px solid black;";
+//            }
+        console.log(this.szog);
+        
+        }
+       
+//        this.style= "transform: rotate(20deg)";
+
+
+//        this.sajatTartalom.clearRect(this.x-1, this.y-1, this.width+2, this.height+2);            //teszt önmegsemmisítés
+        tartalom.clearRect(this.x-2, this.y-2, this.width+4, this.height+4);            //teszt önmegsemmisítés
+        this.sajatTartalom.clearRect(0, 0, this.width, this.height);            //teszt önmegsemmisítés
+        this.sajatTartalom.rotate(this.aktSzog);
+       this.sajatTartalom.drawImage(this.kep,0,0,this.width,this.height);
+        
+        tartalom.drawImage(this.sajatCanvas,this.x,this.y,this.sajatCanvas.width,this.sajatCanvas.height);
         this.x += sebesseg;
-        tartalom.drawImage(this.kep,this.x,this.y,this.width,this.height);
+        
+        
+//        console.log(this);
         
     }
     
 }
 function getRandom(){
-    return Math.random() * canvasMagassag;
+    return Math.random() * canvasMagassag-50;
 }
 function animate(){
     if (frame % 10 === 0 && halak.length < raj){
@@ -67,7 +106,7 @@ function animate(){
     for (var i = 0; i < halak.length; i++) {
 //         console.log(i + "edik hal: " + halak[i].getx());
           halak[i].draw();
-            tartalom.clearRect(0, 0, tartalom.width, tartalom.height);
+//            tartalom.clearRect(0, 0, tartalom.width, tartalom.height);
     }
   requestAnimationFrame(animate);
 }

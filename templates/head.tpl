@@ -7,6 +7,7 @@
         <link href="css/animaciok.css" rel="stylesheet" type="text/css"/>
         <link href="css/reg.css" rel="stylesheet" type="text/css"/>
         <link href="css/palyaStilus.css" rel="stylesheet" type="text/css"/>
+        <link href="css/animaciok/halAnim.css" rel="stylesheet" type="text/css"/>
         <link href="css/szerkezet.css" rel="stylesheet" type="text/css"/>
         <link href="css/halasCanvas.css" rel="stylesheet" type="text/css"/>
     </head>
