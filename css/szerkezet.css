@@ -1,20 +1,23 @@
 body{
     /*display:fixed;*/
     position:absolute;
-    max-width:98%;
+    max-width:100%;
     overflow-x:hidden;
+    background-image: linear-gradient(#0000ff,blue);
 }
 
-/*  #tartalmazo{
-      display:grid;
-}*/
+  #tartalmazo{
+       background-image: linear-gradient(blue,black);
+}
 #halusztato{
-    position:absolute;
-    height: 40vh;
+    /*position:absolute;*/
+    height: 80vh;
+    
 }
 #hajok{
     display:grid;
     justify-content: space-around;
+    
 }
 
 #udvozlom{

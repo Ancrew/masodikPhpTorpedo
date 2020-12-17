@@ -9,7 +9,5 @@
         echo file_get_contents('templates/elsoReteg.tpl');
         echo file_get_contents('templates/harmadikReteg.tpl');
         echo file_get_contents('templates/lorem.tpl');
-        include "includes/halFunkciok.php";
-        halInit();
-        halMozgatas();
+        include "includes/php/halFunkciok.php";
         

@@ -13,7 +13,7 @@
                 .st8{fill:#F9DFAA;stroke:#1D1D1B;stroke-width:0.25;stroke-miterlimit:10;}
                 .st9{fill:#3F3419;}
                 .st10{fill:#17330C;stroke:#1D1D1B;stroke-width:0.1;stroke-miterlimit:10;}
-                .st11{fill:#FFFFFF;}
+                .st11{fill:#0000ff;}
                 .st12{fill:none;stroke:#1D71B8;stroke-width:3;stroke-miterlimit:10;}
             </style>
             <rect id="hatter" class="st0" width="841.9" height="242.8"/>
