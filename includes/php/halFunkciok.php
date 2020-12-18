@@ -7,4 +7,6 @@ for ($i = 0; $i < $raj; $i++){                                                  
     echo $halacskam;
 }
 ?>
-<script type="text/javascript" src="includes/js/halInit.js"></script>
+<script type="text/javascript" src="includes/js/hal.js"></script>
+<script type="text/javascript" src="includes/js/halak_2.js"></script>
+<!--<script type="text/javascript" src="includes/js/halak.js"></script>-->

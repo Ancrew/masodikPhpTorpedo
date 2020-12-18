@@ -11,8 +11,8 @@
      
 
      function halElhelyez(){
-        let bimage = "linear-gradient(red, blue)";
-        document.body.style.backgroundImage = bimage;
+//        let bimage = "linear-gradient(red, blue)";
+//        document.body.style.backgroundImage = bimage;
         let halaim = document.getElementsByClassName('halacska');
         
        //Halak kezdőértékének meghatározása.
@@ -173,8 +173,6 @@
                                     szogek[i] -= forgasSebesseg;
                     }
                 }   
-                else {
-                }
             }
 
 
