@@ -5,9 +5,9 @@
     let halH = 9;
     let halW = 24;
     let halacskak = document.getElementsByClassName('halacska');
-    halacskak[0].style.left =  20 + 'px';
-            halacskak[0].style.top = 30 +  'px';
-    console.log("halátadás: " + halacskak[0].style.top);
+    let vilagitosHal = new VilagitoHal();
+    
+//    console.log("halátadás: " + halacskak[0].style.top);
     let halaim = [];
     let fps = Math.floor(1000/40);    
     let x = 0;
@@ -28,6 +28,7 @@
             itemAtHelyez(halacskak[i], "halusztato")
         
         }
+//        itemAtHelyez(vilagitosHal, "halusztato");
    }
   
 
@@ -47,7 +48,9 @@
     function animalasok(){
         for (var i = 0; i < halaim.length; i++) {
         halaim[i].anim(x, y);
+  
     }
+    vilagitosHal.kovet(x, y);
         setTimeout(animalasok, fps);   
     }
     

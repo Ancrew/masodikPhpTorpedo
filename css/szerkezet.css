@@ -20,6 +20,12 @@ body{
     
 }
 
+#vilagitoHal{
+    position:relative;
+}
+#lorem{
+    /*position:absolute;*/
+}
 #udvozlom{
 /*   display:grid;
    grid-template-columns:repeat(3, 1fr);
