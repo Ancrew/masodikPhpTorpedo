@@ -1,19 +1,13 @@
 
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-        <link href="css/palya/palyaClassok.css" rel="stylesheet" type="text/css"/>
-    </head>
-    <body>
         <?php
-        echo '<div id="keretbe" style="width:200px;height:200px">eeee</div>';
+            include "templates/palya/palyaHead.tpl";
+            include "templates/palya/palyaBody.tpl";
+            
         $racs = 100;
         ?>
-        <div id="palyaTartalmazo">
-            
-        </div>
+       
+     
       
-            
+     <script src="includes/js/jatek/palya.js"></script>       
     </body>
 </html>

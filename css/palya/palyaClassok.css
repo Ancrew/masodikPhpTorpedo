@@ -5,12 +5,14 @@
 }
 #palyaTartalmazo{
     display:grid;
-    grid-template-columns:repeat(10, auto);
-    grid-template-rows:repeat(10,auto);
+/*    grid-template-columns:repeat(10, auto);
+    grid-template-rows:repeat(10,auto);*/
     width:20vh;
     height:20vh;
     margin:auto;
-    
+    background:red;
+    grid-gap:5px;
+    margin-top:20vh;
 }
 
 .szabad{
@@ -18,4 +20,10 @@
     background: red;
     border:1px solid black;
     margin:1px;
+}
+
+.hajok{
+    margin:auto;
+    margin-top: 3px;
+    place-items:center;
 }

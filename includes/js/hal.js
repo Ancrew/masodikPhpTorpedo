@@ -1,6 +1,7 @@
      
      
-     let hal = class Hal{
+//     let hal = class Hal{
+     class Hal{
          constructor(melyik){
          this.halam = melyik;
          this.halam.style.left =  20 + 'px';
@@ -11,6 +12,7 @@
          this.halW = 24;                                    
          this.aktMeret = 1;                                                     //hol tart a zsugorodásban
          this.celMeret = 1;                                                     //mekkorára kellene zsugorodnia
+         this.minMeret = 0.65;
          this.forgasok = 0;                                                     //aktuális forgás (%)
          this.elertMeret= true;                                                 //változik e éppen
          this.z = 0;                                                            //Z-index, aki hátrébb van kerüüljön alacsonyabb számú rétegbe is.
@@ -20,9 +22,10 @@
          this.y = this.getUjY();
          this.halam.style.left = x  + 'px';
          this.halam.style.top = y +  'px';
-         this.maxSebesseg = Math.random() * 9 + 5;
-         this.minSebesseg = Math.random() * 5 + 3;
+         this.maxSebesseg = Math.random() * 8 + 6;
+         this.minSebesseg = Math.random() * 7 + 5;
          this.forgasSebesseg = Math.random() * 20 + 1;
+         this.tavolodasSebesseg = 0.15;
          this.halSebessegX = this.maxSebesseg;
          this.halSebessegY = this.getUjY();
          this.szog = 0;
@@ -42,7 +45,7 @@
                 yOk=true;
 //                console.log("y: " + yOk);
             }
-            if(xOk === false && yOk === false && this.aktMeret > 0.75){
+            if(xOk === false && yOk === false && this.aktMeret > this.minMeret){
                 this.mehet=true;
             }
             else{
@@ -78,7 +81,7 @@
             }
             
             getUjX(){
-              return Math.random() * 200+100 - window.innerWidth;
+              return Math.random() * 10 - window.innerWidth;
             }
             
             //Halak mozgatása
@@ -94,8 +97,9 @@
                             this.halSebessegY =  this.getUjY();
                             this.aktMeret = 1;
                             this.celMeret = 1;
-                            this.maxSebesseg = Math.random() * 9 + 5;
+                            this.maxSebesseg = Math.random() * 8 + 6;
                             this.halSebesseg = this.maxSebesseg;
+//                            this.aktSebesseg = this.halSebesseg;
                                 
                         }           
                         this.forgasMero(y);
@@ -127,17 +131,17 @@
                        let regiX = this.halam.style.left;                 
                        let xInt = this.tisztitott(regiX);
                        if(this.mehet && this.halSebessegX > this.minSebesseg){
-                           this.halSebessegX -= 0.15;
+                           this.halSebessegX -= this.tavolodasSebesseg;
                        }
-                       else if(this.halSebessegX < this.maxSebesseg){
-                           this.halSebessegX += 0.15;
+                       else if(this.halSebessegX < this.minSebesseg){
+                           this.halSebessegX += this.tavolodasSebesseg;
                        }
                        let ujX = (xInt+this.halSebessegX);
                        return ujX;
                }
                
             halYMozgas(erre){
-                let mozgasYSebesseg = Math.random() * 4 + 1;
+                let mozgasYSebesseg = Math.random() * 3 + 1;
                 switch(erre){
                     case("-"):
                         this.halSebessegY += this.szog/2 - mozgasYSebesseg;
@@ -206,10 +210,10 @@
              }
              
              getUjCelMeret(){
-                 if (this.celMeret >= 0.7){
+                 if (this.celMeret >= this.minMeret){
                  this.celMeret = this.aktMeret -  Math.random() * (0.05) + 0.02; 
                  
-//                 console.log("celmeret: :"+this.celMeret);
+                 console.log("celmeret: :"+this.celMeret);
                  return this.celMeret;
              }
              }
@@ -217,9 +221,9 @@
              meretezo(){
                 if(this.mehet){ 
                  if(this.aktMeret > this.celMeret){
-                    let tavolodasSebesseg = Math.random() * 0.06; 
+                    let tavolodasSebesseg = Math.random() * 0.15; 
                     this.maxSebesseg -= 0.2;
-                    this.halSebessegX -= 0.09;
+                    this.halSebessegX -= 0.16;
                     if(this.forgasok > -32){
                          this.forgasok -=10;
                          this.z--;

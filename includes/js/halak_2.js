@@ -5,7 +5,7 @@
     let halH = 9;
     let halW = 24;
     let halacskak = document.getElementsByClassName('halacska');
-    let vilagitosHal = new VilagitoHal();
+//    let vilagitosHal = new VilagitoHal();
     
 //    console.log("halátadás: " + halacskak[0].style.top);
     let halaim = [];
@@ -24,7 +24,7 @@
    function halElhelyez(){  
         for (var i = 0; i < halacskak.length; i++) {
             
-             halaim.push(new hal(halacskak[i]));
+             halaim.push(new Hal(halacskak[i]));
             itemAtHelyez(halacskak[i], "halusztato")
         
         }
@@ -50,7 +50,7 @@
         halaim[i].anim(x, y);
   
     }
-    vilagitosHal.kovet(x, y);
+//    vilagitosHal.kovet(x, y);
         setTimeout(animalasok, fps);   
     }
     

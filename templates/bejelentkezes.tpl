@@ -9,7 +9,7 @@
                 <button type="submit">Bejelentkezés</button>
            </form>
 
-<a href="palya.php">Nézzük meg!</a>
+<a href="map.php">Nézzük meg!</a>
     </div>
     <div id="reg">
         <p>Nincs még fiókod?</p>
