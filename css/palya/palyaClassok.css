@@ -3,21 +3,11 @@
     width:2vh;
     background:1px solid black;
 }
-#palyaTartalmazo{
-    display:grid;
-/*    grid-template-columns:repeat(10, auto);
-    grid-template-rows:repeat(10,auto);*/
-    width:20vh;
-    height:20vh;
-    margin:auto;
-    background:red;
-    grid-gap:5px;
-    margin-top:20vh;
-}
+
 
 .szabad{
     display:grid;
-    background: red;
+    background: green;
     border:1px solid black;
     margin:1px;
 }
@@ -27,3 +17,63 @@
     margin-top: 3px;
     place-items:center;
 }
+
+#palyaKeret{
+    display:grid;
+    width:80%;
+    margin:auto;
+    margin-top:20vh;
+    font-size:14px;
+}
+
+#vizszintesKeret{
+    display:grid;
+    /*margin:auto;*/
+    grid-row:1/2;
+    grid-column:2/3;
+}
+
+#fuggolegesKeret{
+    display:grid;
+    /*margin:auto;*/
+    grid-row:2/3;
+    grid-column:1/2;
+  
+}
+
+#palyaTartalmazo{
+    display:grid;
+    grid-row:2/3;
+    grid-column:2/3;
+}
+
+#hajoTartalmazo{
+    display:grid;
+    grid-row:3/4;
+    grid-column:2/3;
+}
+
+.vizszintes{
+    /*position:absolute;*/
+    text-align: center;
+    
+    /*margin:2px;*/
+}
+.fuggoleges{
+    /*position:absolute;*/
+    /*left:25px;*/
+    margin:auto;
+    text-align: center;
+    transform:
+        translateY(-15%);
+    /*place-items:center;*/
+    
+}
+
+.kettesHajo{
+    width:8px;
+    height:8px;
+    background:blue;
+    margin:auto;
+}
+
