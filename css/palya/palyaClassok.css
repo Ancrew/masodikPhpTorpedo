@@ -96,3 +96,11 @@
     margin:auto;
     grid-column:4/5;
 }
+
+.hibas{
+  background:red;
+}
+
+.hajo{
+  background:blue;
+}
