@@ -11,6 +11,7 @@ var keretBetuMeret = 2;                                                         
 var mapDivek = [];
 var lerak = false;
 var hossz = 0;
+var ervenyesLerakas;
 var lerakottak = [];
 var sikeresLerakas = false;
 var hosszaban = true;
@@ -88,17 +89,7 @@ function makePalya(){
 }
 }
 
-function forgat(sor, oszlop) {
-    if (!this.hosszaban) {
-        this.hosszaban = true;
 
-    } else {
-          this.hosszaban = false;
-    }
-    this.forgatas=false;
-    ervenyesHajo(sor, oszlop, "szabad");
-    ervenyesHajo(sor, oszlop, "hajo");
-}
 
 function makeKorbeKarakter(className,  anya, index = 0){
         if(index < palyaMeret){
@@ -324,55 +315,91 @@ function classNevEllenorzo(sor, oszlop, classNev){
     return eredmeny;
 }
 
-function ervenyesHajo(sor, oszlop, celClass, index = 0){
+function forgat(sor, oszlop) {
+    
+    ervenyesHajo(sor, oszlop, "szabad");
+    this.forgatas = true;
+    if (!this.hosszaban) {
+        this.hosszaban = true;
+        
 
-  if(lerak){
-    var ervenyes = new Promise((resolve, reject) => {
-      console.log("sor: " + sor);
-      console.log("oszlop :" + oszlop);
-      console.log(index);
+    } else {
+          this.hosszaban = false;
+    }
+    this.forgatas=false;
+    console.log("Itt akarok forgatni: sor " + sor + " oszlop" + oszlop + " forgatás állapota: " + hosszaban);
+    //ervenyesHajo(sor, oszlop, "hajo");
+    
+}
+
+function ervenyesHajo(sor, oszlop, celClass, index = 0){
+   
+  ervenyesLerakas = true;
+  if (index === 0)
+      console.log("-------------------");
+   console.log("celclass" + celClass);
+if(lerak && !forgatas){
+    while(ervenyesLerakas && index < hossz){ 
+        console.log("ervenyes :" + ervenyesLerakas + "index" + index);
+         if(hosszaban){
+           console.log("ittindex: " + index);
+           hajoKipakol(sor+index, oszlop, celClass, index);
+         }
+         else{
+           hajoKipakol(sor, oszlop+index, celClass, index);
+         } 
+         index++;
+    }
+  }
+ }
+
+
+function hajoKipakol(sor, oszlop, celClass ,index){
+    let siker = true;
+   console.log("már megint próbálkozunk");
+      var ervenyes = new Promise((resolve, reject) => {
       if (sor <= mapDivek.length && oszlop <= mapDivek.length){
         if(!classNevEllenorzo(sor, oszlop, "foglalt")){
-          resolve(index);
+            
+          console.log("itt jár :");
+          resolve();
         }
         else{
-
-        reject(index);
+        reject();
         }
       }
       else{
-        reject(index);
+        console.log("ittabibi");
       }
     });
-
     ervenyes.then(() => {
-      console.log("then i: " + index);
-  if(index < hossz){
-     classValto(sor, oszlop, celClass);
-    if(hosszaban){
-      console.log("ittindex: " + index);
-        ervenyesHajo(++sor, oszlop, celClass, ++index);
-      }
-    else{
-        ervenyesHajo(sor, ++oszlop, celClass, ++index);
-    }
-    }
+        classValto(sor, oszlop, celClass);
+
   }).catch(() => {
       console.log("hibas" + index);
+      ervenyesLerakas = false;
       hibasLerakas(sor, oszlop, index, celClass);
     });
-  }
-}
+ }
 
 function hibasLerakas(sor, oszlop, db, celClass){
   if(celClass !=="szabad")
     celClass = "hibas";
-  if(hosszaban)
-    for (var i = 0; i < db; i++)
-      classValto(sor+i, oszlop, celClass);
+console.log("soritt :" + sor);
+console.log("oszlopitt :" + oszlop);
+  if(hosszaban){
+    for (var i = 1; i <= db; i++){
+        console.log("hibasindex hosszaban: "+ i);
+        console.log("sor - i: " + (sor -  i));
+      classValto(sor - i, oszlop, celClass);
+      
+    }
+  }
   else
-    for (var i = 0; i < db; i++)
-      classValto(sor, oszlop + i, celClass);
+    for (var i = 1; i <= db; i++){
+        console.log("hibasindex hosszaban: "+ i);
+      classValto(sor, oszlop - i, celClass);
+  }
 }
 
 function keretSzamolo(sor, oszlop) {
