@@ -1,4 +1,4 @@
-  
+<div id="kozosKeret">  
      <div id="keret">
         <div id="tartalmazo">   
         </div>  
@@ -6,4 +6,5 @@
         </div>
      <script src="js/map.js"></script>
      </div>
+</div>
   

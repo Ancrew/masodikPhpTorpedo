@@ -1,39 +1,71 @@
-.map{
-    height:2vh;
-    width:2vh;
-    background:1px solid black;
-}
 
+#kozosKeret{
+    display:grid;
+   grid-template-columns:repeat(2, 1fr);
+   grid-template-rows:1fr;
+   height:70%;
+}
 
 .szabad{
     display:grid;
     background: green;
-    border:1px solid black;
-    margin:1px;
+   border:1px solid black;
+    /*margin:1px;*/
 }
 
 .hajok{
     margin:auto;
-    margin-top: 3px;
+
     place-items:center;
 }
 
-#palyaKeret{
+#jatekosPalyaKeret{
     display:grid;
-    width:80%;
-    margin:auto;
     margin-top:20vh;
-    font-size:14px;
+    grid-column:2/3;
+    grid-row:1/2;
+    /*font-size:14px;*/
 }
 
-#vizszintesKeret{
+#jatekosPalyaKeretKesz{
+    display:grid;
+    margin-top:20vh;
+    grid-column:2/3;
+    grid-row:1/2;
+    /*font-size:14px;*/
+}
+
+#aiPalyaKeret{
+    display:grid;
+    margin-top:20vh;
+    grid-column:2/3;
+    grid-row:1/2;
+        margin-right: 0px;
+    transform:
+        translateX(100%);
+    z-index:-1;
+    opacity: 0%;
+    
+    /*font-size:14px;*/
+}
+
+#jatekosVizszintesKeret{
     display:grid;
     /*margin:auto;*/
     grid-row:1/2;
     grid-column:2/3;
 }
 
-#fuggolegesKeret{
+#aiVizszintesKeret{
+    display:grid;
+    /*margin:auto;*/
+    grid-row:1/2;
+    grid-column:2/3;
+}
+
+
+
+#jatekosFuggolegesKeret{
     display:grid;
     /*margin:auto;*/
     grid-row:2/3;
@@ -41,7 +73,22 @@
 
 }
 
-#palyaTartalmazo{
+
+#aiFuggolegesKeret{
+    display:grid;
+    /*margin:auto;*/
+    grid-row:2/3;
+    grid-column:1/2;
+
+}
+
+#jatekosPalyaTartalmazo{
+    display:grid;
+    grid-row:2/3;
+    grid-column:2/3;
+}
+
+#aiPalyaTartalmazo{
     display:grid;
     grid-row:2/3;
     grid-column:2/3;
@@ -53,26 +100,27 @@
     grid-column:2/3;
 }
 
+
 .vizszintes{
     /*position:absolute;*/
+    /*display:inline-block;*/
     text-align: center;
-
+    /*margin:auto;*/
     /*margin:2px;*/
 }
 .fuggoleges{
+    /*display:inline-block;*/
     /*position:absolute;*/
     /*left:25px;*/
-    margin:auto;
+    /*margin:auto;*/
     text-align: center;
-    transform:
-        translateY(15%);
+/*    transform:
+        translateY(15%);*/
     place-items:center;
 
 }
 
 .kettesHajo{
-    width:8px;
-    height:8px;
     background:blue;
     margin:auto;
     grid-column:1/2;
@@ -83,15 +131,11 @@
     grid-column:2/3;
 }
 .negyesHajo{
-    width:8px;
-    height:8px;
     background:blue;
     margin:auto;
     grid-column:3/4;
 }
 .otosHajo{
-    width:8px;
-    height:8px;
     background:blue;
     margin:auto;
     grid-column:4/5;
@@ -110,4 +154,53 @@
 }
 .teszt{
     background:purple;
+}
+
+#aiPalyaKeret{
+    grid-column:1/2;
+}
+
+
+@media screen and (max-width: 700px){
+    #kozosKeret{
+   grid-template-columns:1fr;
+   grid-template-rows:repeat(2, 1fr);
+}
+#jatekosPalyaKeret{
+     transform:
+        translateX(0%) 
+        translateY(-60%) !important;
+    margin-top:10vh;
+    height:45vh !important;
+    width:30vh !important;
+    grid-column:1/2;
+    grid-row:2/3;
+    margin:auto auto auto auto !important;
+    /*font-size:14px;*/
+}
+#jatekosPalyaKeretKesz{
+     display:grid;
+    margin-top:20vh;
+    grid-column:2/3;
+    grid-row:1/2;
+      transform:
+        translateX(0%);
+    margin-top:10vh;
+    grid-column:1/2;
+    grid-row:2/3;
+    margin:10vh auto 30vh auto !important;
+    /*font-size:14px;*/
+}
+
+#aiPalyaKeret{
+    margin-top:10vh;
+    grid-column:1/2;
+    grid-row:1/2;
+    margin:10vh auto 10vh auto !important;
+    /*font-size:14px;*/
+}
+#kozosKeret{
+    height:100%;
+    width:100%;
+}
 }

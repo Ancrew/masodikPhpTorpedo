@@ -1,6 +1,6 @@
 
 var kockaMeret = 20;
-var palyaMeret = 13;
+var palyaMeret = 10;
 var keretMeret = 1;
 var gridGap = 1;
 var keretBetuMeret = 2;                                                                 //lehet felesleges
@@ -18,10 +18,14 @@ var forgathat = true;
 var forgatas = false;
 let jatekosHajoi;
 var hajoFajtak = [["kettesHajo", 2, 2], ["harmasHajo", 2, 3], ["negyesHajo", 1, 4], ["otosHajo", 1, 5]];  //hajó neve -> hajó darabSzáma, hajó hossza
-let keret = document.getElementById("palyaKeret");
-let tartalmazo = document.getElementById("palyaTartalmazo");
-let vizszintesKeret = document.getElementById("vizszintesKeret");
-let fuggolegesKeret = document.getElementById("fuggolegesKeret");
+let keret = document.getElementById("jatekosPalyaKeret");
+let tartalmazo = document.getElementById("jatekosPalyaTartalmazo");
+let vizszintesKeret = document.getElementById("jatekosVizszintesKeret");
+let fuggolegesKeret = document.getElementById("jatekosFuggolegesKeret");
+let aiKeret = document.getElementById("aiPalyaKeret");
+let aiTartalmazo = document.getElementById("aiPalyaTartalmazo");
+let aiVizszintesKeret = document.getElementById("aiVizszintesKeret");
+let aiFuggolegesKeret = document.getElementById("aiFuggolegesKeret");
 let hajoTartalmazo = document.getElementById("hajoTartalmazo");
 let hatraLevoHajok = 4;
 
@@ -30,24 +34,20 @@ init();
 function init(){
         makePalya("jatekos");
         makeHajok();
+        cssBeallit(keret);
+        cssBeallit(tartalmazo);
+        cssBeallit(vizszintesKeret);
+        cssBeallit(fuggolegesKeret);
+        cssBeallit(hajoTartalmazo);
+        felkeszules("jatekos");
 }
 
-function makePalya(tulaj){
-     cssBeallit(keret);
-     cssBeallit(tartalmazo);
-     cssBeallit(vizszintesKeret);
-     cssBeallit(fuggolegesKeret);
-     cssBeallit(hajoTartalmazo);
-     makeKorbeKarakter("vizszintes", vizszintesKeret);
-     makeKorbeKarakter("fuggoleges", fuggolegesKeret);
-
-    for (var i = 0; i < palyaMeret; i++) {
-        mapDivek[i] = [];
-
-        for (var x = 0; x < palyaMeret; x++) {
-            let nev =tulaj + "p" + i + "." + x;
-            mapDivek[i][x] = makeDiv(tulaj + " szabad", tartalmazo);
-            let ujDiv = mapDivek[i][x];
+function felkeszules(tulaj){
+    
+    for (var i = 0; i < mapDivek.length; i++) {
+        for (var e = 0; e < mapDivek.length; e++) {
+            let ujDiv = mapDivek[i][e];
+             let nev =tulaj + "p" + i + "." + e;
             ujDiv.id=nev;
             let indexek = kivalaszto(nev);
             ujDiv.addEventListener("wheel", function () {
@@ -67,6 +67,29 @@ function makePalya(tulaj){
                     veglegesit(indexek[0],indexek[1]);
             });
         }
+    }
+}
+
+function makePalya(tulaj){
+    switch(tulaj){
+       case"jatekos":
+            makeKorbeKarakter("vizszintes", vizszintesKeret);
+            makeKorbeKarakter("fuggoleges", fuggolegesKeret);
+            break;
+        case "ai":
+            makeKorbeKarakter("vizszintes", aiVizszintesKeret);
+            makeKorbeKarakter("fuggoleges", aiFuggolegesKeret);
+         break;
+ 
+    }
+    for (var i = 0; i < palyaMeret; i++) {
+        mapDivek[i] = [];
+
+        for (var x = 0; x < palyaMeret; x++) {
+           if(tulaj==="jatekos") mapDivek[i][x] = makeDiv(tulaj + " szabad", tartalmazo);
+           else mapDivek[i][x] = makeDiv(tulaj + " szabad", aiTartalmazo);
+                       
+        }
 
 }
 }
@@ -78,16 +101,16 @@ function makeKorbeKarakter(className,  anya, index = 0){
             let divem;
             switch(className){
                 case "vizszintes":
-                    divem = makeDiv("vizszintes", vizszintesKeret);
+                    divem = makeDiv("vizszintes", anya);
                     divem.style.border="none";
-                    divem.style.width = kockaMeret + (2 * keretMeret) + "px";
-                    divem.style.height = kockaMeret + (2 * keretMeret) + "px";
+//                    divem.style.width = kockaMeret + (2 * keretMeret) + "px";
+//                    divem.style.height = kockaMeret + (2 * keretMeret) + "px";
                     divem.innerHTML=index+1;
                     break;
                 case "fuggoleges":
-                    divem = makeDiv("fuggoleges", fuggolegesKeret);
-                    divem.style.width = kockaMeret + (2 * keretMeret) + "px";
-                    divem.style.height = kockaMeret + (2 * keretMeret) + "px";
+                    divem = makeDiv("fuggoleges", anya);
+//                    divem.style.width = kockaMeret + (2 * keretMeret) + "px";
+//                    divem.style.height = kockaMeret + (2 * keretMeret) + "px";
                     divem.style.border="none";
                     divem.innerHTML=(index+10).toString(36);
                     break;
@@ -109,46 +132,84 @@ function cssBeallit(melyiket){
         case keret:
             keret.style.margin = "auto";
             keret.style.marginTop = "20vh";
+            keret.style.marginLeft = "0px";
             keret.style.gridTemplateColumns = "1fr " + palyaMeret + "fr";
-            keret.style.gridTemplateRows = "1fr " + (palyaMeret) + "fr 1fr";
-//            keret.style.width= (palyaMeret * kockaMeret) + ((2 * palyaMeret) * keretMeret) + ((palyaMeret) *  gridGap) + kockaMeret + gridGap + "px";
-//            keret.style.height= (palyaMeret * kockaMeret) + ((2 * palyaMeret) * keretMeret) + ((palyaMeret) *  gridGap) + kockaMeret + gridGap + (5 * kockaMeret) + ((2 * palyaMeret) * keretMeret) + ((palyaMeret-1) *  gridGap) + "px";
-            keret.style.width= (palyaMeret * kockaMeret) + ((2 * palyaMeret) * keretMeret) + ((palyaMeret) *  gridGap) + kockaMeret + gridGap + "px";
-            keret.style.height= (palyaMeret * kockaMeret) + ((2 * palyaMeret) * keretMeret) + ((palyaMeret) *  gridGap) + kockaMeret + gridGap + (5 * kockaMeret) + ((2 * palyaMeret) * keretMeret) + ((palyaMeret-1) *  gridGap) + "px";
+            keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr 5fr";
+//            keret.style.left= "50vw";
+            keret.style.transform = "translateX(-50%)";
+           keret.style.width = 2 * (1 + palyaMeret) + "vw";
+           keret.style.height = 2 * (6 + palyaMeret) + "vw";
             break;
         case tartalmazo:
-            tartalmazo.style.gridTemplateColumns = "repeat(" + palyaMeret + ", 1fr)";
             tartalmazo.style.gridTemplateRows = "repeat(" + palyaMeret + ", 1fr)";
-            tartalmazo.style.height = (palyaMeret * kockaMeret) + ((2 * palyaMeret) * keretMeret) + ((palyaMeret-1) *  gridGap) + "px";
-            tartalmazo.style.width = (palyaMeret * kockaMeret) + ((2 * palyaMeret) * keretMeret) + ((palyaMeret-1) *  gridGap) + "px";
+            tartalmazo.style.gridTemplateColumns = "repeat(" + palyaMeret + ", 1fr)";
             break;
         case vizszintesKeret:
-            vizszintesKeret.style.gridTemplateColumns = "repeat(" + palyaMeret + ", 1fr)";
-            vizszintesKeret.style.gridGap = gridGap + "px";
-            vizszintesKeret.style.width = (palyaMeret * kockaMeret) + ((2 * palyaMeret) * keretMeret) + ((palyaMeret-1) *  gridGap) + "px";
-            vizszintesKeret.style.height = kockaMeret + (2 * gridGap) + "px";
+            vizszintesKeret.style.gridTemplateColumns = "repeat(" + palyaMeret + ", 1fr";
             break;
         case fuggolegesKeret:
-            fuggolegesKeret.style.height = (palyaMeret * kockaMeret) + ((2 * palyaMeret) * keretMeret) + ((palyaMeret-1) *  gridGap) + "px";
-            fuggolegesKeret.style.width = kockaMeret + (2 * gridGap) + "px";
-            fuggolegesKeret.style.gridGap = gridGap + "px";
             fuggolegesKeret.style.gridTemplateRows = "repeat(" + palyaMeret + ", 1fr)";
             break;
         case hajoTartalmazo:
-            hajoTartalmazo.style.height = (5 * kockaMeret) + ((2 * palyaMeret) * keretMeret) + ((palyaMeret-1) *  gridGap) + "px";
-            hajoTartalmazo.style.width = (palyaMeret * kockaMeret) + ((2 * palyaMeret) * keretMeret) + ((palyaMeret-1) *  gridGap) + "px";
-            hajoTartalmazo.style.gridGap = gridGap + "px";
-            hajoTartalmazo.style.gridTemplateRows = "repeat(" + 5 + "," + kockaMeret + "px)";
-            hajoTartalmazo.style.gridTemplateColumns = "repeat(" + 4 + "," + kockaMeret + "px)";
+            hajoTartalmazo.style.height = "auto";
+            hajoTartalmazo.style.width = "auto";
+            hajoTartalmazo.style.gridTemplateRows = "repeat(" + 5 + ","  + "1fr)";
+            hajoTartalmazo.style.gridTemplateColumns = "repeat(" + 4 + "," + "1fr)";
             hajoTartalmazo.style.justifyContent = "space-around";
-            hajoTartalmazo.style.marginTop = 10 * gridGap + "px";
             break;
             
-        case "keretet":
-            keret.style.marginLeft = "60%";
-           // keret.style.marginRight = "40%";
-            keret.style.marginTop = "0vh";
+//        case "keretet":
+//            keret.style.marginLeft = "60%";
+//            keret.style.marginTop = "0vh";         
+//            break;
+case "ai":
+         aiKeret.style.width = 2 * (1 + palyaMeret) + "vw";
+           aiKeret.style.height = 2 * (6 + palyaMeret) + "vw"; 
+           aiKeret.style.marginTop = "20vh";
+           aiKeret.style.gridTemplateColumns = "1fr " + palyaMeret + "fr";
+//           aiKeret.style.gridTemplateRows = "1fr " + palyaMeret + "fr";
+           aiTartalmazo.style.gridTemplateRows = "repeat(" + palyaMeret + ", 1fr)";
+            aiTartalmazo.style.gridTemplateColumns = "repeat(" + palyaMeret + ", 1fr)";
+            aiFuggolegesKeret.style.gridTemplateRows = "repeat(" + palyaMeret + ", 1fr)"; 
+           aiVizszintesKeret.style.gridTemplateColumns = "repeat(" + palyaMeret + ", 1fr";
           
+
+break;
+        case "jatekKezdes":
+            console.log("most fut");
+             hajoTartalmazo.style.display = "none";
+          aiKeret.style.transitionDuration = "2s";
+          keret.style.transitionDuration = "2s";
+          aiKeret.style.opacity = "100%";
+            
+             aiKeret.style.height = 2 * (palyaMeret) + "vw";
+            keret.style.height = 2 * (palyaMeret) + "vw";
+            aiKeret.style.gridTemplateRows = "1fr " + palyaMeret + "fr";
+            keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr";
+//            aiKeret.style.right= "auto";
+            
+//            
+//            aiKeret.style.marginRight = "auto";
+//            keret.style.transform = "translateX(0%)";
+            aiKeret.style.margin = "auto auto auto auto";
+            
+            keret.style.margin = "auto auto auto auto";
+           
+            
+             
+            
+//            keret.style.marginLeft = "auto";
+                keret.style.left= "auto";
+                 keret.style.transform = "translateX(0%)";
+            
+            
+           aiKeret.style.width = 2 * (1 + palyaMeret) + "vw";
+          
+                      
+        
+          
+           
+            aiKeret.style.transform = "translateX(0%)";
             
             break;
         default:
@@ -166,19 +227,25 @@ function makeHajok(kulsoIndex = 0, belsoIndex = 0){
             hajoReszDiv.id = hajoReszNev;
             let hajoResz = document.getElementById(hajoReszNev);
             hajoResz.style.gridRow = belsoIndex+1 + "/" + parseInt(belsoIndex+2);
-            hajoResz.style.height = kockaMeret + "px";
-            hajoResz.style.width = kockaMeret + "px";
-            hajoTartalmazo.style.gridGap = 0 + "px";
+            hajoResz.style.height = "75%";
+            hajoResz.style.marginTop = "5%";
+//            hajoResz.style.width = "auto";
+            hajoResz.style.background = "blue";
+            hajoResz.style.width = "30%";
+//            hajoResz.style.height = kockaMeret + "px";
+//            hajoResz.style.width = kockaMeret + "px";
+//            hajoTartalmazo.style.gridGap = 0 + "px";
+            hajoResz.style.border = "1px solid black";
             hajoResz.style.cursor = "pointer";
             hajoResz.addEventListener("click", function () {
             lepakol(belsoIndex);
         });
-            if (belsoIndex%2===0){
-              hajoResz.style.backgroundImage = "url('svg/hajoreszek0.svg')";
-            }
-            else {
-              hajoResz.style.backgroundImage = "url('svg/hajoreszek1.svg')";
-            }
+//            if (belsoIndex%2===0){
+//              hajoResz.style.backgroundImage = "url('svg/hajoreszek0.svg')";
+//            }
+//            else {
+//              hajoResz.style.backgroundImage = "url('svg/hajoreszek1.svg')";
+//            }
             belsoIndex++;
           }
     if(kulsoIndex < hajoFajtak.length-1){
@@ -379,15 +446,20 @@ function kivalaszto(nev) {
 }
 
 function jatekIndul(){
-    let keretek;
     for (var i = 0; i < mapDivek.length; i++) {
         for (var x = 0; x < mapDivek.length; x++) {
             if(mapDivek[i][x].className.includes("keret"))
-            mapDivek[i][x].className = "jatekos szabad";
-           
+            mapDivek[i][x].className = "jatekos szabad"; 
         }
     }
-    cssBeallit("keretet");
-    hajoTartalmazo.style.display = "none";
-   // makePalya("gep");
+    
+ 
+            makePalya("ai");
+              cssBeallit("ai");
+    keret.id = "jatekosPalyaKeretKesz";
+    setTimeout(function(){ 
+        cssBeallit("jatekKezdes");
+    }, 10);
+   //cssBeallit("jatekKezdes");
+    
 }
