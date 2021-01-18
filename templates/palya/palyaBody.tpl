@@ -12,6 +12,10 @@
         <div id=hajoTartalmazo>
 
         </div> 
+<div id="gombok">
+<button  onclick="jatekIndul()" id="indul">Mehet</button>
+<button id="reset">Reset</button>
+</div>
     </div>
     <div id="aiPalyaKeret">
         <div id = aiVizszintesKeret>

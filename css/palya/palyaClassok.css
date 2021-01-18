@@ -3,7 +3,7 @@
     display:grid;
    grid-template-columns:repeat(2, 1fr);
    grid-template-rows:1fr;
-   height:70%;
+   height:80%;
    width:70%;
    margin:auto;
 }
@@ -14,15 +14,47 @@
    border:1px solid black;
     /*margin:1px;*/
     
-    transition-duration:0.5s;
+    transition-duration:0.1s;
 }
 
 .hajok{
     margin:auto;
-
+transition: 2s;
     place-items:center;
 }
 
+#gombok{
+    margin-top:5%;
+    height:auto;
+    width:auto;
+    grid-row:4/5;
+    grid-column:2/3;
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    transition: 2s;
+    
+    /*margin:auto;*/
+    /*justify-content:space-between;*/
+    /*place-content:space-around;*/
+}
+#indul{
+    grid-column:1/2;
+    width:50%;
+    margin:auto;
+    disabled:true;
+    transition: 1s;
+    height:100%;
+    /*opacity: 50%;*/
+}
+
+
+#reset{
+    grid-column:2/3;
+    width:50%;
+    margin:auto;
+    transition: 1s;
+    height:100%;
+}
 /*#jatekosPalyaKeret{
     display:grid;
     margin-top:20vh;
@@ -39,6 +71,7 @@
     margin-top:20vh;
     grid-column:2/3;
     grid-row:1/2;
+    transition:1sec;
 }
 #jatekosPalyaKeretKesz{
     display:grid;
@@ -115,6 +148,8 @@
     display:grid;
     grid-row:3/4;
     grid-column:2/3;
+    z-index:-1;
+    transition: 2s;
 }
 
 

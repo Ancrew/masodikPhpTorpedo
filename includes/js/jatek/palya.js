@@ -22,10 +22,14 @@ let aiTartalmazo = document.getElementById("aiPalyaTartalmazo");
 let aiVizszintesKeret = document.getElementById("aiVizszintesKeret");
 let aiFuggolegesKeret = document.getElementById("aiFuggolegesKeret");
 let hajoTartalmazo = document.getElementById("hajoTartalmazo");
+let resetelo = document.getElementById("reset");
+let indul = document.getElementById("indul");
+let gombok = document.getElementById("gombok");
 
 init();
 
 function init() {
+    indul.disabled = "true";
     makePalya("jatekos");
     makeHajok();
     cssBeallit(keret);
@@ -34,6 +38,24 @@ function init() {
     cssBeallit(fuggolegesKeret);
     cssBeallit(hajoTartalmazo);
     felkeszules("jatekos");
+    resetelo.addEventListener("click", function(){
+       reseteles();
+    });
+}
+
+function reseteles(){
+    hatraLevoHajok = 4;
+     for (var i = 0; i < mapDivek.length; i++) {
+            for (var x = 0; x < mapDivek.length; x++) {
+                mapDivek[i][x].className="szabad";
+                hajoFajtak = [["kettesHajo", 2, 2], ["harmasHajo", 2, 3], ["negyesHajo", 1, 4], ["otosHajo", 1, 5]];
+            }
+        }
+        hajoDivTorlo();
+        
+    indul.disabled = "true";
+       //makeHajok();
+     
 }
 
 function felkeszules(tulaj) {
@@ -125,10 +147,10 @@ function cssBeallit(melyiket) {
             keret.style.marginTop = "10vh";
             keret.style.marginLeft = "0px";
             keret.style.gridTemplateColumns = "1fr " + palyaMeret + "fr";
-            keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr 5fr";
+            keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr 5fr 1fr";
             keret.style.transform = "translateX(-50%)";
             keret.style.width = 2 * (1 + palyaMeret) + "vw";
-            keret.style.height = 2 * (6 + palyaMeret) + "vw";
+            keret.style.height = 2 * (8 + palyaMeret) + "vw";
             break;
         case tartalmazo:
             tartalmazo.style.gridTemplateRows = "repeat(" + palyaMeret + ", 1fr)";
@@ -159,28 +181,62 @@ function cssBeallit(melyiket) {
 
         case "elokeszit":
             keret.style.transitionDuration = "1s";
-            keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr";
-            keret.style.height = "40vh";
-            keret.style.width = "40vh";
+//            keret.style.height = "40vh";
+//            keret.style.width = "40vh";
             keret.style.margin = "20vh auto auto auto";
-            hajoTartalmazo.style.display = "none";         
+            hajoTartalmazo.style.transform = "translateY(-200%)";
+            gombok.style.height = "0%";
+            keret.style.height = "40vh";
+            aiKeret.style.height = "40vh";
+            keret.style.width = "40vh";
+            aiKeret.style.width = "40vh";
+            resetelo.style.height = "0%";
+            indul.style.height = "0%";
+            indul.style.opacity = "0%";
+            resetelo.style.opacity = "0%";
+//            keret.style.height = "50vh";
+            keret.style.gridTemplateRows ="1fr 14fr 3fr";
+
+            keret.style.left = "auto";
+            
             break;
 
         case "jatekKezdes":
+               gombok.style.display = "none";
+            hajoTartalmazo.style.display = "none";
+//            keret.style.gridTemplateRows ="1fr 13fr";
+            aiKeret.style.gridTemplateRows ="1fr 14fr 3fr";
             keret.style.transitionDuration = "2";
-            keret.style.left = "auto";
             keret.style.transform = "translateX(0%)";
             aiKeret.style.transitionDuration = "2s";
+            keret.style.height = "40vh";
+            aiKeret.style.height = "40vh";
+//            keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr";
             aiKeret.style.opacity = "100%";
-            aiKeret.style.gridTemplateRows = "1fr " + palyaMeret + "fr";
+//            aiKeret.style.gridTemplateRows = "1fr " + palyaMeret + "fr";
             aiKeret.style.margin = "20vh auto auto auto";
             aiKeret.style.transform = "translateX(0%)";
+            
             break;
         default:
             return null;
             break;
     }
 
+}
+
+function hajoDivTorlo(kellUj = true){
+   let hajokhoz=document.getElementsByClassName("hajokhoz");
+   let hajoDb = hajokhoz.length;
+   let index = 0;
+   while(index < hajoDb){
+//       hajokhoz[0].style.height = "0px";
+        hajokhoz[0].remove();
+        index++;  
+   }
+   if(kellUj){
+   makeHajok();
+   }
 }
 
 // a pálya alatt lévő hajók kirajzolása, amikre kattintva a pályára kirakhatóak lesznek a hajók.
@@ -286,7 +342,7 @@ function nincsTobbIlyen(hajoReszek) {
         hajoReszek[i].style.opacity = 0.3;
         hajoReszek[i].style.cursor = "no-drop";
     }
-    if (--hatraLevoHajok === 0) jatekIndul();
+    if (--hatraLevoHajok === 0) indul.disabled = false;
 }
 
 function classValto(sor, oszlop, ujNev) {
@@ -420,7 +476,11 @@ function jatekIndul() {
         for (var x = 0; x < mapDivek.length; x++)
             if (mapDivek[i][x].className.includes("keret"))
                 mapDivek[i][x].className = "szabad";
-
+    
+//            keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr";
+//        hajoDivTorlo(false);
+    
+            
     makePalya("ai");
     cssBeallit("ai");
     setTimeout(function () {
@@ -428,7 +488,7 @@ function jatekIndul() {
         setTimeout(function () {
             cssBeallit("jatekKezdes");
         }, 1000);
-    }, 10);
+    }, 5);
 
 
 }
