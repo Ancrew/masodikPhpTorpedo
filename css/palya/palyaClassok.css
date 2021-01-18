@@ -4,6 +4,8 @@
    grid-template-columns:repeat(2, 1fr);
    grid-template-rows:1fr;
    height:70%;
+   width:70%;
+   margin:auto;
 }
 
 .szabad{
@@ -11,6 +13,8 @@
     background: green;
    border:1px solid black;
     /*margin:1px;*/
+    
+    transition-duration:0.5s;
 }
 
 .hajok{
@@ -19,16 +23,27 @@
     place-items:center;
 }
 
-#jatekosPalyaKeret{
+/*#jatekosPalyaKeret{
     display:grid;
     margin-top:20vh;
     grid-column:2/3;
     grid-row:1/2;
-    /*font-size:14px;*/
+      height:50vh;
+    width:40vh;
+    font-size:14px;
+}*/
+#jatekosPalyaKeret{
+      display:grid;
+    height:40vh;
+    width:40vh;
+    margin-top:20vh;
+    grid-column:2/3;
+    grid-row:1/2;
 }
-
 #jatekosPalyaKeretKesz{
     display:grid;
+    height:40vh;
+    width:40vh;
     margin-top:20vh;
     grid-column:2/3;
     grid-row:1/2;
@@ -38,6 +53,8 @@
 #aiPalyaKeret{
     display:grid;
     margin-top:20vh;
+      height:40vh;
+    width:40vh;
     grid-column:2/3;
     grid-row:1/2;
         margin-right: 0px;
@@ -120,10 +137,20 @@
 
 }
 
+.hajokhoz{
+    height: 75%;
+    margin-top:5%;
+    background:blue;
+    width: 30%;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
 .kettesHajo{
     background:blue;
     margin:auto;
     grid-column:1/2;
+    
 }
 .harmasHajo{
     background:blue;
@@ -147,10 +174,14 @@
 
 .hajo{
   background:blue;
+  border:2px solid blue;
 }
 
 .keret{
+    transition-duration:1s;
     background:gray;
+    border:3px solid gray;
+    
 }
 .teszt{
     background:purple;
@@ -171,8 +202,8 @@
         translateX(0%) 
         translateY(-60%) !important;
     margin-top:10vh;
-    height:45vh !important;
-    width:30vh !important;
+/*    height:45vh !important;
+    width:30vh !important;*/
     grid-column:1/2;
     grid-row:2/3;
     margin:auto auto auto auto !important;
@@ -189,6 +220,8 @@
     grid-column:1/2;
     grid-row:2/3;
     margin:10vh auto 30vh auto !important;
+    height: auto    !important;
+    width:auto  !important;
     /*font-size:14px;*/
 }
 
@@ -196,11 +229,32 @@
     margin-top:10vh;
     grid-column:1/2;
     grid-row:1/2;
-    margin:10vh auto 10vh auto !important;
+    margin:10vh auto 20vh auto !important;
+     height: auto !important;
+    width:auto !important;
     /*font-size:14px;*/
 }
 #kozosKeret{
     height:100%;
     width:100%;
+}
+
+/*#jatekosPalyaKeret{
+    width:auto !important;
+    height:auto !important;
+}*/
+#jatekosPalyaKeret{
+        display:grid;
+    margin-top:20vh;
+    grid-column:2/3;
+    grid-row:1/2;
+      transform:
+        translateX(0%);
+    /*margin-top:10vh;*/
+    grid-column:1/2;
+    grid-row:2/3;
+    margin:20vh auto 30vh auto !important;
+    height: auto    !important;
+    width:auto  !important;
 }
 }
