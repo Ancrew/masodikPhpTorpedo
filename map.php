@@ -8,6 +8,8 @@
        
      
       
-     <script src="includes/js/jatek/palya.js"></script>       
+     <script src="includes/js/jatek/palya.js"></script>
+     <script src="includes/js/jatek/ai.js"></script>
+     
     </body>
 </html>

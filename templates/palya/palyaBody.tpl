@@ -14,8 +14,10 @@
         </div> 
 <div id="gombok">
 <button  onclick="jatekIndul()" id="indul">Mehet</button>
+
 <button id="reset">Reset</button>
 </div>
+<button  onclick="ai()" id="ai">Ai</button>
     </div>
     <div id="aiPalyaKeret">
         <div id = aiVizszintesKeret>

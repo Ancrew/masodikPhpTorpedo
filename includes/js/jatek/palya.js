@@ -1,6 +1,7 @@
 
 var palyaMeret = 13;                                                            //hányszor hányas legyen a pálya
 var mapDivek = [];                                                              //a pályát alkotó divek
+let aiDivek = [];
 var lerak = false;                                                              //éppen le akarok e rakni egy kockát
 var hossz = 0;                                                                  //aktuálisan lerakandó hajó hossza
 var ervenyesLerakas;                                                            //lerakhatom e a hajot az adott helyre
@@ -12,6 +13,8 @@ var forgathat = true;                                                           
 let hatraLevoHajok = 4;
 let aiHajoi;                                                               //AI lerakott hajok;
 var hajoFajtak = [["kettesHajo", 2, 2], ["harmasHajo", 2, 3], ["negyesHajo", 1, 4], ["otosHajo", 1, 5]];  //hajó neve -> hajó darabSzáma, hajó hossza
+let jatekInditas=false;
+
 
 let keret = document.getElementById("jatekosPalyaKeret");
 let tartalmazo = document.getElementById("jatekosPalyaTartalmazo");
@@ -29,7 +32,7 @@ let gombok = document.getElementById("gombok");
 init();
 
 function init() {
-    indul.disabled = "true";
+//    indul.disabled = "true";
     makePalya("jatekos");
     makeHajok();
     cssBeallit(keret);
@@ -103,11 +106,12 @@ function makePalya(tulaj) {                                                     
     //pályában lévő divek létrehozása
     for (var i = 0; i < palyaMeret; i++) {
         mapDivek[i] = [];
+        aiDivek[i] = [];
         for (var x = 0; x < palyaMeret; x++) {
             if (tulaj === "jatekos")
                 mapDivek[i][x] = makeDiv(tulaj + " szabad", tartalmazo);
             else
-                mapDivek[i][x] = makeDiv(tulaj + " szabad", aiTartalmazo);
+                aiDivek[i][x] = makeDiv(tulaj + " szabad", aiTartalmazo);
         }
     }
 }
@@ -179,12 +183,24 @@ function cssBeallit(melyiket) {
             aiVizszintesKeret.style.gridTemplateColumns = "repeat(" + palyaMeret + ", 1fr";
             break;
 
+        case "eltuntet":
+            
+            keret.style.transitionDuration = "0.5s";
+            keret.style.opacity = "0%";
+            break;
+         
+         
         case "elokeszit":
-            keret.style.transitionDuration = "1s";
+            
+            aiKeret.style.transitionDuration = "0s";
+            keret.style.transitionDuration = "0s";
 //            keret.style.height = "40vh";
 //            keret.style.width = "40vh";
             keret.style.margin = "20vh auto auto auto";
-            hajoTartalmazo.style.transform = "translateY(-200%)";
+//            hajoTartalmazo.style.transform = "translateY(-200%)";
+            
+            aiKeret.style.gridTemplateRows ="1fr " +palyaMeret + "fr";
+            keret.style.gridTemplateRows ="1fr " +palyaMeret + "fr";
             gombok.style.height = "0%";
             keret.style.height = "40vh";
             aiKeret.style.height = "40vh";
@@ -195,19 +211,20 @@ function cssBeallit(melyiket) {
             indul.style.opacity = "0%";
             resetelo.style.opacity = "0%";
 //            keret.style.height = "50vh";
-            keret.style.gridTemplateRows ="1fr 14fr 3fr";
+//            keret.style.gridTemplateRows ="1fr 14fr 3fr";
 
+               gombok.style.display = "none";
+            hajoTartalmazo.style.display = "none";
             keret.style.left = "auto";
             
             break;
 
         case "jatekKezdes":
-               gombok.style.display = "none";
-            hajoTartalmazo.style.display = "none";
 //            keret.style.gridTemplateRows ="1fr 13fr";
-            aiKeret.style.gridTemplateRows ="1fr 14fr 3fr";
-            keret.style.transitionDuration = "2";
+            keret.style.transitionDuration = "2s";
             keret.style.transform = "translateX(0%)";
+            
+            keret.style.opacity = "100%";
             aiKeret.style.transitionDuration = "2s";
             keret.style.height = "40vh";
             aiKeret.style.height = "40vh";
@@ -471,24 +488,36 @@ function kivalaszto(nev) {
     return eredmeny;
 }
 
+function getPalyaMeret(){
+    return palyaMeret;
+}
 function jatekIndul() {
-    for (var i = 0; i < mapDivek.length; i++)
-        for (var x = 0; x < mapDivek.length; x++)
-            if (mapDivek[i][x].className.includes("keret"))
-                mapDivek[i][x].className = "szabad";
+   
     
 //            keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr";
 //        hajoDivTorlo(false);
-    
+     jatekInditas=true;
+     for (var i = 0; i < mapDivek.length; i++)
+        for (var x = 0; x < mapDivek.length; x++)
+            if (mapDivek[i][x].className.includes("keret"))
+                mapDivek[i][x].className = "szabad";
+   
             
     makePalya("ai");
     cssBeallit("ai");
+    setTimeout(function() {
+        console.log("eltuntet");
+         cssBeallit("eltuntet");
+    }, 500);
     setTimeout(function () {
-        cssBeallit("elokeszit");
-        setTimeout(function () {
-            cssBeallit("jatekKezdes");
-        }, 1000);
-    }, 5);
+          cssBeallit("elokeszit");
+       ;
+    }, 1500);
+     
+    setTimeout(function () {
+    cssBeallit("jatekKezdes")
+    }, 1505);
 
 
-}
+} 
+
