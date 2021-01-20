@@ -1,5 +1,5 @@
 
-var palyaMeret = 13;                                                            //hányszor hányas legyen a pálya
+var palyaMeret = 10;                                                            //hányszor hányas legyen a pálya
 var mapDivek = [];                                                              //a pályát alkotó divek
 var aiDivek = [];
 var lerak = false;                                                              //éppen le akarok e rakni egy kockát
@@ -33,14 +33,25 @@ init();
 
 function init() {
 //    indul.disabled = "true";
+
+//    cssBeallit("ai");
+//    cssBeallit("elokeszit");
+//    cssBeallit("jatekKezdes");
+    
+    
     makePalya("jatekos");
+    makePalya("ai");
+   
+    
     makeHajok();
     cssBeallit(keret);
     cssBeallit(tartalmazo);
     cssBeallit(vizszintesKeret);
     cssBeallit(fuggolegesKeret);
     cssBeallit(hajoTartalmazo);
+     
     felkeszules("jatekos");
+    felkeszules("ai");
     
     resetelo.addEventListener("click", function(){
        reseteles();
@@ -63,25 +74,25 @@ function reseteles(){
 }
 
 function felkeszules(tulaj) {
-//let ujDiv;
-//console.log("kecske");
+let ujDiv;
+console.log(tulaj);
     for (var i = 0; i < mapDivek.length; i++) {
         for (var e = 0; e < mapDivek.length; e++) {
-//            if (tulaj==="jatekos"){
-               let ujDiv = mapDivek[i][e];
-//            }
-//            else{ 
-//                ujDiv = aiDivek[i][e];
-//            }
-            let nev = tulaj + "p" + i + "." + e;
+            if (tulaj==="jatekos"){
+                ujDiv = mapDivek[i][e];
+            }
+            else{ 
+                ujDiv = aiDivek[i][e];
+            }
+//            let nev = tulaj + "p" + i + "," + e;
 //            ujDiv.style.background = "black";
-            ujDiv.id = nev;
+//            ujDiv.id = nev;
 //            let indexek = kivalaszto(nev);
 //            let indexek = kivalaszto(i, e);
-            let indexek = [i, e]
+            let indexek = [i, e];
             let sor = indexek[0];
             let oszlop = indexek[1];
-//            if(tulaj ==="jatekos"){
+            if(tulaj ==="jatekos"){
                 ujDiv.addEventListener("wheel", function () {
                     forgat(sor, oszlop);
                 });
@@ -96,20 +107,24 @@ function felkeszules(tulaj) {
 
                 ujDiv.addEventListener("click", function () {
                     veglegesit(sor, oszlop);
-                                        lovesKoordinatak(sor, oszlop);
+//                                       console.log(sor);
+//                                       console.log(oszlop);
 
                 });
-//            }
-//            else{
-//                console.log("ideérünk");
-////            console.log(oszlop);
-//                
-//            }
+            }
+            else{
+                console.log("ideérünk");
+            console.log(oszlop);
+                
+            }
         }
     }
 }
 
-
+function getLovesHelye(sor, oszlop){
+    let helyek = [sor, oszlop];
+    return helyek;
+}
 
 function makePalya(tulaj) {                                                     //Pálya előkészítése játékra
    //koordináták kiírása a pálya köré
@@ -117,25 +132,42 @@ function makePalya(tulaj) {                                                     
         case"jatekos":
             makeKorbeKarakter("vizszintes", vizszintesKeret);
             makeKorbeKarakter("fuggoleges", fuggolegesKeret);
+            divListabaRakas(mapDivek, tulaj + " szabad", tartalmazo);
             break;
         case "ai":
             makeKorbeKarakter("vizszintes", aiVizszintesKeret);
             makeKorbeKarakter("fuggoleges", aiFuggolegesKeret);
+            divListabaRakas(aiDivek, tulaj + " szabad", aiTartalmazo);
             break;
     }
     //pályában lévő divek létrehozása
-    for (var i = 0; i < palyaMeret; i++) {
-        mapDivek[i] = [];
-        aiDivek[i] = [];
-        for (var x = 0; x < palyaMeret; x++) {
-            if (tulaj === "jatekos")
-                mapDivek[i][x] = makeDiv(tulaj + " szabad", tartalmazo);
-            else
-                aiDivek[i][x] = makeDiv(tulaj + " szabad", aiTartalmazo);
-        }
-    }
+//    for (var i = 0; i < palyaMeret; i++) {
+//        mapDivek[i] = [];
+//        aiDivek[i] = [];
+//        for (var x = 0; x < palyaMeret; x++) {
+//            if (tulaj === "jatekos"){
+//                mapDivek[i][x] = makeDiv(tulaj + " szabad", tartalmazo);
+//            }
+//            else{
+//                aiDivek[i][x] = makeDiv(tulaj + " szabad", aiTartalmazo);
+////                let ezADiv = aiDivek[i][x];
+////                ezADiv.onmouseover = function(){
+////                    console.log(i);
+////                    console.log(x);
+////                };
+//            }
+//        }
+//    }
 }
 
+function divListabaRakas(melyikhez, nev, tartalmazo){
+    for (var i = 0; i < palyaMeret; i++) {
+        melyikhez[i] = [];
+        for (var e = 0; e < palyaMeret; e++) 
+            melyikhez[i][e] = makeDiv(nev, tartalmazo);
+    }
+    console.log(melyikhez);
+}
 
 
 function makeKorbeKarakter(className, anya, index = 0) {                        
@@ -214,24 +246,19 @@ function cssBeallit(melyiket) {
             
             aiKeret.style.transitionDuration = "0s";
             keret.style.transitionDuration = "0s";
-//            keret.style.height = "40vh";
-//            keret.style.width = "40vh";
             keret.style.margin = "20vh auto auto auto";
-//            hajoTartalmazo.style.transform = "translateY(-200%)";
             
             aiKeret.style.gridTemplateRows ="1fr " +palyaMeret + "fr";
             keret.style.gridTemplateRows ="1fr " +palyaMeret + "fr";
-            gombok.style.height = "0%";
+                  gombok.style.height = "0%"; 
             keret.style.height = "40vh";
             aiKeret.style.height = "40vh";
             keret.style.width = "40vh";
             aiKeret.style.width = "40vh";
             resetelo.style.height = "0%";
-            indul.style.height = "0%";
-            indul.style.opacity = "0%";
+                    indul.style.height = "0%";
+                    indul.style.opacity = "0%";
             resetelo.style.opacity = "0%";
-//            keret.style.height = "50vh";
-//            keret.style.gridTemplateRows ="1fr 14fr 3fr";
 
                gombok.style.display = "none";
             hajoTartalmazo.style.display = "none";
@@ -240,19 +267,17 @@ function cssBeallit(melyiket) {
             break;
 
         case "jatekKezdes":
-//            keret.style.gridTemplateRows ="1fr 13fr";
             keret.style.transitionDuration = "2s";
             keret.style.transform = "translateX(0%)";
-            
+            aiKeret.style.zIndex = "0";
             keret.style.opacity = "100%";
             aiKeret.style.transitionDuration = "2s";
             keret.style.height = "40vh";
             aiKeret.style.height = "40vh";
-//            keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr";
             aiKeret.style.opacity = "100%";
-//            aiKeret.style.gridTemplateRows = "1fr " + palyaMeret + "fr";
             aiKeret.style.margin = "20vh auto auto auto";
             aiKeret.style.transform = "translateX(0%)";
+            aiKeret.style.transform = "translateX(-50%)";
             
             break;
         default:
@@ -535,22 +560,26 @@ function kivalaszto(sor, oszlop) {
 function getPalyaMeret(){
     return palyaMeret;
 }
+
 function jatekIndul() {
-   console.log("mapdivek 00: " + mapDivek[0][0]);
     
 //            keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr";
 //        hajoDivTorlo(false);
      jatekInditas=true;
-     for (var i = 0; i < mapDivek.length; i++)
-        for (var x = 0; x < mapDivek.length; x++)
+     for (let i = 0; i < mapDivek.length; i++)
+        for (let x = 0; x < mapDivek.length; x++)
             if (mapDivek[i][x].className.includes("keret"))
                 mapDivek[i][x].className = "szabad";
-   
-            
-    makePalya("ai");
+//let foglaltak = document.getElementsByClassName("keret");         
+//let index = 0;
+//while(index < foglaltak.length){
+//    foglaltak[index].className = "szabad";
+//    index++;
+//
+//}
+//}
     cssBeallit("ai");
     setTimeout(function() {
-        console.log("eltuntet");
          cssBeallit("eltuntet");
     }, 500);
     setTimeout(function () {
@@ -561,7 +590,6 @@ function jatekIndul() {
     setTimeout(function () {
     cssBeallit("jatekKezdes");
     }, 1505);
-    
 
 } 
 

@@ -79,6 +79,7 @@ transition: 2s;
     width:40vh;
     margin-top:20vh;
     grid-column:2/3;
+    /*z-index: 1;*/
     grid-row:1/2;
     /*font-size:14px;*/
 }
