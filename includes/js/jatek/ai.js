@@ -42,87 +42,45 @@ function hajoKalkulalas(hossza = 5, index = 0) {
          //egyes hajót már ne gyártsunk
     if(hossza > 2){
         
-        
-      
-        
-    
-    //újra hívjuk a függvényünket a következő hajó (midnig 1-el kisebb) létrehozására
     hajoKalkulalas(--hossza, index);
     }
-     
-//     else{
-//         torloTeszt(0,0);
-//         torloTeszt(0,1);
-//         torloTeszt(0,2);
-//         torloTeszt(0,3);
-//         torloTeszt(0,4);
-//         torloTeszt(1,0);
-//         torloTeszt(1,1);
-//         torloTeszt(1,2);
-//         torloTeszt(1,3);
-//         torloTeszt(2,0);
-//         torloTeszt(2,1);
-//         torloTeszt(2,2);
-//         torloTeszt(3,0);
-//         torloTeszt(3,1);
-//         torloTeszt(4,0);
-//     }
 
 }
 
-function torloTeszt(melyikHajo, hanyadikResze){
-    for (var i = 0; i < 2; i++) {
-        aiHajok[melyikHajo][hanyadikResze].splice(0,1);
-    }
-    let kilotthajo = true;
-    for (var i = 0; i < aiHajok[melyikHajo].length; i++) {
-        if (aiHajok[melyikHajo][i].length > 0) {
-           kilotthajo = false;
-        }
-    }
-    console.log(kilotthajo);
-    if(kilotthajo){
-        dbSzam=aiHajok[melyikHajo].length;
-        for (var i = 0; i < dbSzam; i++) 
-            aiHajok[melyikHajo].splice(0,1);
-  
-    }
-    let vanmegHajo = false;
-    for (var i = 0; i < aiHajok.length; i++) 
-        if(aiHajok[i].length > 0)
-            vanmegHajo = true;
-    
 
-    if (!vanmegHajo) {
-        console.log("VÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉGE!!!!!!!!!!!!");
-    }
-}
 
 function ujHajoDarab(sor, oszlop, hossza, fuggoleges, index) {
     aiHajok[index] = [];
     if (fuggoleges){
         for (var i = 0; i < hossza; i++) {
-//            if(ervenyesHajoHely(sor + i ,oszlop)){
+        let bentiIndex = 0;
+//        let ervenyes = true;
+//        while(bentiIndex < hossza && ervenyes){
+            if(ervenyesHajoHely(sor + i ,oszlop)){
                 aiHajok[index][i] = [];
                 aiHajok[index][i].push(sor + i);
                 aiHajok[index][i].push(oszlop);
+                aiDivek[sor+i][oszlop].style.background = "red";
             }
-//            else
+            else{
+//               ervenyes = false;
+hajoKalkulalas(hossza, index);
+            }
 //                hajoKalkulalas(hossza, index);
         }
         
-    
-//    }
+    }
      else{
         for (var i = 0; i < hossza; i++) {
-//            if(ervenyesHajoHely(sor ,oszlop + i)){
+            if(ervenyesHajoHely(sor ,oszlop + i)){
                 aiHajok[index][i] = [];
                 aiHajok[index][i].push(sor);
                 aiHajok[index][i].push(oszlop + i);
+                aiDivek[sor][oszlop+i].style.background = "red";
             }
-//             else
-//                hajoKalkulalas(hossza, index);
-//        }
+             else
+                hajoKalkulalas(hossza, index);
+        }
     }
 }
 
@@ -130,10 +88,15 @@ function ervenyesHajoHely(sor, oszlop){
     let eredmeny = true;
     let kulsoIndex=0;
     let belsoIndex = 0;
-    while(eredmeny && kulsoIndex < aiHajok.length)
-        while(eredmeny && belsoIndex < aiHajok[kulsoIndex.length])
-            if(aiHajok[kulsoIndex][belsoIndex][0] === sor && aiaiHajok[kulsoIndex][belsoIndex][1] === oszlop)
-                eredmeny = false;
+    while(eredmeny && kulsoIndex < aiHajok.length){
+        while(eredmeny && belsoIndex < aiHajok[kulsoIndex.length]){
+            if(aiHajok[kulsoIndex][belsoIndex][0] === sor && aiHajok[kulsoIndex][belsoIndex][1] === oszlop){
+                 eredmeny = false;
+            }
+            belsoIndex++;
+        }
+        kulsoIndex++;
+    }
     
     return eredmeny;
 }
@@ -172,6 +135,30 @@ function talalatErtekelo(sor, oszlop){
         aiDivek[sor][oszlop].innerHTML = "X";
 }
 
-    function ez(){
-        
+function torloTeszt(melyikHajo, hanyadikResze){
+    for (var i = 0; i < 2; i++) {
+        aiHajok[melyikHajo][hanyadikResze].splice(0,1);
+    }
+    let kilotthajo = true;
+    for (var i = 0; i < aiHajok[melyikHajo].length; i++) {
+        if (aiHajok[melyikHajo][i].length > 0) {
+           kilotthajo = false;
+        }
+    }
+    console.log(kilotthajo);
+    if(kilotthajo){
+        dbSzam=aiHajok[melyikHajo].length;
+        for (var i = 0; i < dbSzam; i++) 
+            aiHajok[melyikHajo].splice(0,1);
+  
+    }
+    let vanmegHajo = false;
+    for (var i = 0; i < aiHajok.length; i++) 
+        if(aiHajok[i].length > 0)
+            vanmegHajo = true;
+    
+
+    if (!vanmegHajo) {
+        console.log("VÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉGE!!!!!!!!!!!!");
+    }
 }
