@@ -50,8 +50,8 @@ function init() {
     cssBeallit(fuggolegesKeret);
     cssBeallit(hajoTartalmazo);
      
-    felkeszules("jatekos");
-    felkeszules("ai");
+    felkeszules();
+//    felkeszules("ai");
     
     resetelo.addEventListener("click", function(){
        reseteles();
@@ -73,26 +73,18 @@ function reseteles(){
      
 }
 
-function felkeszules(tulaj) {
-let ujDiv;
-console.log(tulaj);
+function felkeszules() {
+//let ujDiv;
     for (var i = 0; i < mapDivek.length; i++) {
         for (var e = 0; e < mapDivek.length; e++) {
-            if (tulaj==="jatekos"){
-                ujDiv = mapDivek[i][e];
-            }
-            else{ 
-                ujDiv = aiDivek[i][e];
-            }
-//            let nev = tulaj + "p" + i + "," + e;
-//            ujDiv.style.background = "black";
-//            ujDiv.id = nev;
-//            let indexek = kivalaszto(nev);
-//            let indexek = kivalaszto(i, e);
+//            if (tulaj==="jatekos"){
+               let ujDiv = mapDivek[i][e];
+//            }
+
             let indexek = [i, e];
             let sor = indexek[0];
             let oszlop = indexek[1];
-            if(tulaj ==="jatekos"){
+//            if(tulaj ==="jatekos"){
                 ujDiv.addEventListener("wheel", function () {
                     forgat(sor, oszlop);
                 });
@@ -107,16 +99,9 @@ console.log(tulaj);
 
                 ujDiv.addEventListener("click", function () {
                     veglegesit(sor, oszlop);
-//                                       console.log(sor);
-//                                       console.log(oszlop);
 
                 });
-            }
-            else{
-                console.log("ideérünk");
-            console.log(oszlop);
-                
-            }
+//            }
         }
     }
 }
@@ -140,24 +125,6 @@ function makePalya(tulaj) {                                                     
             divListabaRakas(aiDivek, tulaj + " szabad", aiTartalmazo);
             break;
     }
-    //pályában lévő divek létrehozása
-//    for (var i = 0; i < palyaMeret; i++) {
-//        mapDivek[i] = [];
-//        aiDivek[i] = [];
-//        for (var x = 0; x < palyaMeret; x++) {
-//            if (tulaj === "jatekos"){
-//                mapDivek[i][x] = makeDiv(tulaj + " szabad", tartalmazo);
-//            }
-//            else{
-//                aiDivek[i][x] = makeDiv(tulaj + " szabad", aiTartalmazo);
-////                let ezADiv = aiDivek[i][x];
-////                ezADiv.onmouseover = function(){
-////                    console.log(i);
-////                    console.log(x);
-////                };
-//            }
-//        }
-//    }
 }
 
 function divListabaRakas(melyikhez, nev, tartalmazo){
@@ -166,7 +133,6 @@ function divListabaRakas(melyikhez, nev, tartalmazo){
         for (var e = 0; e < palyaMeret; e++) 
             melyikhez[i][e] = makeDiv(nev, tartalmazo);
     }
-    console.log(melyikhez);
 }
 
 
@@ -513,71 +479,25 @@ function keretSzamolo(sor, oszlop) {
     }
 }
 
-function kivalaszto(sor, oszlop) {
-   eredmeny = [];
-//    
-//    let megvan = false;
-//    let oszlop = 0;
-//    let sor = 0;
-    eredmeny[0] = sor;
-    eredmeny[1] = oszlop;
-//    while (sor < mapDivek.length && !megvan) {
-//        oszlop = 0;
-//        while (oszlop < mapDivek[sor].length && !megvan) {
-//            if (mapDivek[sor][oszlop] === document.getElementById(nev)) {
-//                megvan = true;
-//                eredmeny[0] = sor;
-//                eredmeny[1] = oszlop;
-//            } else oszlop++;
-//        }
-//        if (!megvan)
-//            sor++;
-//    }
-    return eredmeny;
-}
-//function kivalaszto(nev) {
-//   
-//    
-//    let megvan = false;
-//    let oszlop = 0;
-//    let sor = 0;
-//    let eredmeny = [];
-//    while (sor < mapDivek.length && !megvan) {
-//        oszlop = 0;
-//        while (oszlop < mapDivek[sor].length && !megvan) {
-//            if (mapDivek[sor][oszlop] === document.getElementById(nev)) {
-//                megvan = true;
-//                eredmeny[0] = sor;
-//                eredmeny[1] = oszlop;
-//            } else oszlop++;
-//        }
-//        if (!megvan)
-//            sor++;
-//    }
-//    return eredmeny;
-//}
 
-function getPalyaMeret(){
-    return palyaMeret;
-}
+//
+//function kivalaszto(sor, oszlop) {
+//   eredmeny = [];
+//    eredmeny[0] = sor;
+//    eredmeny[1] = oszlop;
+//    return eredmeny;
+//    }
+//function getPalyaMeret(){
+//    return palyaMeret;
+//}
 
 function jatekIndul() {
     
-//            keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr";
-//        hajoDivTorlo(false);
      jatekInditas=true;
      for (let i = 0; i < mapDivek.length; i++)
         for (let x = 0; x < mapDivek.length; x++)
             if (mapDivek[i][x].className.includes("keret"))
                 mapDivek[i][x].className = "szabad";
-//let foglaltak = document.getElementsByClassName("keret");         
-//let index = 0;
-//while(index < foglaltak.length){
-//    foglaltak[index].className = "szabad";
-//    index++;
-//
-//}
-//}
     cssBeallit("ai");
     setTimeout(function() {
          cssBeallit("eltuntet");
@@ -589,7 +509,7 @@ function jatekIndul() {
      
     setTimeout(function () {
     cssBeallit("jatekKezdes");
-    }, 1505);
+    }, 1550);
 
 } 
 
