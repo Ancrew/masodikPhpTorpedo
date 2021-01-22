@@ -1,4 +1,6 @@
 let aiHajok = [];
+let aiKeretek = [];
+let aiKeretIndex;
 init();
 
 
@@ -22,8 +24,9 @@ function init() {
 
 function ai() {
     if (jatekInditas) {
-        hajoKalkulalas();
         aiPalyaErzekeles();
+        hajoKalkulalas();
+//        aiPalyaErzekeles();
         console.log(aiHajok);
     }
 }
@@ -50,16 +53,17 @@ function hajoKalkulalas(hossza = 5, index = 0) {
     if (ujHajoDarab(sor, oszlop, hossza, fuggoleges, index)) {                 //true ha sikeres a lerakás false ha sikertelen
         index++;
         hossza--;
+    
+
+
+    //        index++;
+        //hármas hajó duplázása
+        if (index === 3)
+            hossza++;
+        //kettes hajó duplázása
+        else if (index === 5)
+            hossza++;
     }
-
-
-//        index++;
-    //hármas hajó duplázása
-    if (index === 3)
-        hossza++;
-    //kettes hajó duplázása
-    else if (index === 5)
-        hossza++;
 //        console.log("kövi index = " + index);
 //       console.log("kövi hossz = " + hossza);
     //egyes hajót már ne gyártsunk
@@ -153,9 +157,8 @@ function ervenyesHajoHely(sor, oszlop) {
 }
 
 function aiPalyaErzekeles() {
-    let indexem = 0;
-    indexem++;
-}
+//    let indexem = 0;
+//    indexem++;
 let indexek = [];
 for (var i = 0; i < aiDivek.length; i++) {
     for (var e = 0; e < aiDivek[i].length; e++) {
@@ -167,6 +170,8 @@ for (var i = 0; i < aiDivek.length; i++) {
             talalatErtekelo(sor, oszlop);
         });
     }
+}
+
 }
 
 function talalatErtekelo(sor, oszlop) {
@@ -196,7 +201,7 @@ function hajoTorlo(melyikHajo, hanyadikResze) {
             kilotthajo = false;
         }
     }
-    console.log(kilotthajo);
+    console.log("kilott hajo? " + kilotthajo);
     if (kilotthajo) {
         dbSzam = aiHajok[melyikHajo].length;
         for (var i = 0; i < dbSzam; i++)
@@ -211,5 +216,37 @@ function hajoTorlo(melyikHajo, hanyadikResze) {
 
     if (!vanmegHajo) {
         console.log("VÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉGE!!!!!!!!!!!!");
+    }
+}
+
+//azt se tudom mit írjak már ide.
+function aiKeretSzamolo(sor, oszlop, fuggoleges) {
+    switch (fuggoleges) {
+        case true:
+            for (var i = -1; i <= 1; i++) {
+                if (ervenyesKeret(sor - 1, oszlop + i))
+                   aiKeretek.push
+                if (ervenyesKeret(sor + hossz, oszlop + i))
+                    classValto(sor + hossz, oszlop + i, "keret foglalt");
+                for (var x = sor; x < sor + hossz; x++)
+                    if (ervenyesKeret(x, oszlop + i) && i !== 0)
+                        classValto(x, oszlop + i, "keret foglalt");
+            }
+            break;
+
+        case false:
+            for (var i = -1; i <= 1; i++) {
+                if (sor + i >= 0 && sor + i < mapDivek.length) {
+                    if (ervenyesKeret(sor + i, oszlop - 1))
+                        classValto(sor + i, oszlop - 1, "keret foglalt");
+                    if (ervenyesKeret(sor + i, oszlop + hossz))
+                        classValto(sor + i, oszlop + hossz, "keret foglalt");
+                    for (var x = oszlop; x < oszlop + hossz; x++) {
+                        if (i !== 0)
+                            classValto(sor + i, x, "keret foglalt");
+                    }
+                }
+            }
+            break;
     }
 }

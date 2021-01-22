@@ -106,10 +106,10 @@ function felkeszules() {
     }
 }
 
-function getLovesHelye(sor, oszlop){
-    let helyek = [sor, oszlop];
-    return helyek;
-}
+//function getLovesHelye(sor, oszlop){
+//    let helyek = [sor, oszlop];
+//    return helyek;
+//}
 
 function makePalya(tulaj) {                                                     //Pálya előkészítése játékra
    //koordináták kiírása a pálya köré
