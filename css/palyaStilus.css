@@ -1,0 +1,54 @@
+
+body{
+    margin:0;
+    padding:0;
+}
+#tartalmazo{
+    /*margin:auto;*/
+    border:1px solid black;
+
+}
+
+.szabad{
+    background-color:blue;
+}
+.foglalt{
+    background-color:green;
+}
+
+.hibas{
+    background-color:red;
+}
+.sikeres{
+    background-color:green;
+}
+
+.indexek{
+    background-color: white;
+    /*text-align: center;*/
+    text-transform: uppercase;
+}
+#keret{
+    margin:auto;
+    padding:0;
+    padding-top:50px;
+    position:relative;
+}
+.vizszintesIndex{
+    position:absolute;
+    /*border:none;*/
+    top:25px;
+    /*margin:1px;*/
+    text-align: center;
+    /*text-justify: center;*/
+    
+}
+.fuggolegesIndex{
+    position:absolute;
+    /*border:none;*/
+    left:-25px;
+    /*margin:1px;*/
+    text-align: center;
+    /*text-justify: auto;*/
+    
+}
