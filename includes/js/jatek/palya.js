@@ -510,8 +510,6 @@ function keretSzamolo(sor, oszlop) {
 //}
 
 function jatekIndul() {
-    console.log("jatekos hajoi: ");
-    console.log(jatekosHajok);
      jatekInditas=true;
      for (let i = 0; i < mapDivek.length; i++)
         for (let x = 0; x < mapDivek.length; x++)
@@ -532,86 +530,103 @@ function jatekIndul() {
 
 } 
 
+// amennyiben egy lövés találatot ért el, meghívja ezt a függévnyt ami kitörli az adott hajó részt, illetve kijelzi, és megvizsgálja van e még másik része az adott hajónak.
 function hajoTorlo(kiet, melyikHajo, hanyadikResze) {
-    for (var i = 0; i < 2; i++) {
-        if(kiet==="jatekos") jatekosHajok[melyikHajo][hanyadikResze].splice(0, 1);
-        else aiHajok[melyikHajo][hanyadikResze].splice(0, 1);
-    }
-    let kilotthajo = true;
-    for (var i = 0; i < aiHajok[melyikHajo].length; i++) {
-        if(kiet==="jatekos"){
-            if (jatekosHajok[melyikHajo][i].length > 0) 
-                 kilotthajo = false;
-            }
-        else 
-            if (aiHajok[melyikHajo][i].length > 0) 
-                 kilotthajo = false;
-            
-        }
-     
-       
-    
-    console.log("kilott hajo? " + kilotthajo);
-    if (kilotthajo) {
-        let dbSzam;
-        if (kiet === "jatekos") {
-            dbSzam = jatekosHajok[melyikHajo].length;
-        for (var i = 0; i < dbSzam; i++)
-            jatekosHajok[melyikHajo].splice(0, 1);
-        }
-        else{
-        let dbSzam = aiHajok[melyikHajo].length;
-        for (var i = 0; i < dbSzam; i++)
-            aiHajok[melyikHajo].splice(0, 1);
-    }
-    }
+    let kilottHajo = true;
     let vanmegHajo = false;
-    if(kiet === "jatekos"){ 
-    for (var i = 0; i < jatekosHajok.length; i++)
-        if (jatekosHajok[i].length > 0)
-            vanmegHajo = true;
+    let dbSzam;
+    switch(kiet){
+        case "jatekos":
+            for (var i = 0; i < 2; i++) {
+                 jatekosHajok[melyikHajo][hanyadikResze].splice(0, 1);
+            }             
+            for (var i = 0; i < jatekosHajok[melyikHajo].length; i++) {
+                  if (jatekosHajok[melyikHajo][i].length > 0) 
+                        kilottHajo = false;
+            }
+            if (kilottHajo) {
+                
+                dbSzam = jatekosHajok[melyikHajo].length;
+                for (var i = 0; i < dbSzam; i++)
+                    jatekosHajok[melyikHajo].splice(0, 1);
+            }
+                for (var i = 0; i < jatekosHajok.length; i++)
+                    if (jatekosHajok[i].length > 0)
+                        vanmegHajo = true;       
+   
+
+            break;
+            
+        case "ai":
+            for (var i = 0; i < 2; i++) {
+                aiHajok[melyikHajo][hanyadikResze].splice(0, 1);
+            }        
+            for (var i = 0; i < aiHajok[melyikHajo].length; i++) {
+                 if (aiHajok[melyikHajo][i].length > 0) 
+                     kilottHajo = false;
+            }
+            if (kilottHajo) {
+                dbSzam = aiHajok[melyikHajo].length;
+                for (var i = 0; i < dbSzam; i++)
+                    aiHajok[melyikHajo].splice(0, 1);
+            }
+
+            for (var i = 0; i < aiHajok.length; i++)
+                if (aiHajok[i].length > 0)
+                    vanmegHajo = true;
+    
+            
+            break;
+            
     }
-    else{
-        for (var i = 0; i < aiHajok.length; i++)
-        if (aiHajok[i].length > 0)
-            vanmegHajo = true;
-    }
+    
     if (!vanmegHajo) {
-        console.log("VÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉGE!!!!!!!!!!!!");
+    console.log("VÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉGE!!!!!!!!!!!!");
     }
+    return kilottHajo;
 }
+
+
+// kiértékeli a találatot, visszatérési értéke attól függ, van e még része az esetleg eltalált hajónak
 function talalatErtekelo(kie, sor, oszlop) {
-    eredmeny = false;
+//    let sullyedt = false;    
+    
+    eredmeny = [];
     switch(kie){
         case "jatekos":
+        mapDivek[sor][oszlop].className += " lottekra";
         for (var i = 0; i < jatekosHajok.length; i++) {
             for (var e = 0; e < jatekosHajok[i].length; e++) {
                 if (jatekosHajok[i][e][0] === sor && jatekosHajok[i][e][1] === oszlop) {
-                    hajoTorlo("jatekos", i, e);
-                    eredmeny = true;
+                    console.log("Hajotorlo i: " + i + "hajotorlo e: " + e);
+                    eredmeny["sullyedt"] = hajoTorlo("jatekos", i, e);                               //igaz ha elsulyedt a hajo
+                    eredmeny["talalt"] = true;
                     mapDivek[sor][oszlop].className += " elTalalt";
                     mapDivek[sor][oszlop].style.background = "red";
                     mapDivek[sor][oszlop].innerHTML = "!";
                 }
         }
-        if (!eredmeny && !mapDivek[sor][oszlop].classList.contains("elTalalt"))
+        if (!eredmeny["talalt"] && !mapDivek[sor][oszlop].classList.contains("elTalalt"))
             mapDivek[sor][oszlop].innerHTML = "X";
         }
         break;
-        case "ai":for (var i = 0; i < aiHajok.length; i++) {
-            for (var e = 0; e < aiHajok[i].length; e++) {
-                if (aiHajok[i][e][0] === sor && aiHajok[i][e][1] === oszlop) {
-                    hajoTorlo("ai", i, e);
-                    eredmeny = true;
-                    aiDivek[sor][oszlop].className += " elTalalt";
-                    aiDivek[sor][oszlop].style.background = "red";
-                    aiDivek[sor][oszlop].innerHTML = "!";
+        case "ai":
+            aiDivek[sor][oszlop].className += " lottekra";
+            for (var i = 0; i < aiHajok.length; i++) {
+                for (var e = 0; e < aiHajok[i].length; e++) {
+                    if (aiHajok[i][e][0] === sor && aiHajok[i][e][1] === oszlop) {
+                        eredmeny["sullyedt"] = hajoTorlo("ai", i, e);                            //igaz ha elsulyedt a hajo
+                        eredmeny["talalt"] = true;
+                        aiDivek[sor][oszlop].className += " elTalalt";
+                        aiDivek[sor][oszlop].style.background = "red";
+                        aiDivek[sor][oszlop].innerHTML = "!";
+                    }
                 }
-            }
-            if (!eredmeny && !aiDivek[sor][oszlop].classList.contains("elTalalt"))
-                 aiDivek[sor][oszlop].innerHTML = "X";
-            break;
+                if (!eredmeny["talalt"] && !aiDivek[sor][oszlop].classList.contains("elTalalt"))
+                     aiDivek[sor][oszlop].innerHTML = "X";
+                
         }
+        break;
     }
-    
+    return eredmeny;
 }

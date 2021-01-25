@@ -65,7 +65,7 @@ transition: 2s;
     font-size:14px;
 }*/
 #jatekosPalyaKeret{
-      display:grid;
+    display:grid;
     height:40vh;
     width:40vh;
     margin-top:20vh;
@@ -209,6 +209,7 @@ transition: 2s;
 }
 
 .hajo{
+    display:grid;
   background:blue;
   border:2px solid blue;
 }
@@ -226,6 +227,16 @@ transition: 2s;
 #aiPalyaKeret{
     grid-column:1/2;
 }
+
+
+.lottekra{
+    font-size:100%;
+    align-items: center;
+    font-weight: bold;
+    font-family: serif;
+    text-align: center;
+}
+
 
 #jatekosPalyaTartalmazo p, aiPalyaTartalmazo p{
     font-size:100%;
