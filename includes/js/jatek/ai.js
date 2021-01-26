@@ -3,16 +3,18 @@ let aiKeretek = [];
 let aiKeretIndex = 0;
 let aiLovesHelyek = [];
 let aiLovesIndexek = 0;
-let vanBefejezetlenLoves = false;
+let vanBefejezetlenHajoTalalat = false;
 let lehetsegesIranyok = [true, true, true, true];
 //lehetsegesIranyok["fenn"] = true;
 //lehetsegesIranyok["jobb"]= true;
 //lehetsegesIranyok["lenn"] = true;
 //lehetsegesIranyok["bal"] = true;
 let szukitettLehetosegek = false;
-let kovetkezoHely = 5;
+let kovetkezoIrany = 5;
 let kovetkezoSor = Math.floor(Math.random() * palyaMeret);
 let kovetkezoOszlop = Math.floor(Math.random() * palyaMeret);
+let elsoTalaltHajoDivPoz = [];
+
 init();
 
 
@@ -43,9 +45,6 @@ function ai() {
 //lehetsegesIranyok["bal"] = true;
 //}
 function hajoKalkulalas(hossza = 5, index = 0) {
-//    console.log("-------------");
-//    console.log("index: " + index);
-//    console.log("hossz: " + hossza);
     let fuggoleges = false;
     let rSzam = Math.round(Math.random());
     if (rSzam % 2 === 0)
@@ -96,7 +95,7 @@ function ujHajoDarab(sor, oszlop, hossza, fuggoleges, index) {
             aiHajok[index][bentiIndex] = [];
             aiHajok[index][bentiIndex].push(ujSor);
             aiHajok[index][bentiIndex].push(ujOszlop);
-            aiDivek[ujSor][ujOszlop].style.background = "gray";
+//            aiDivek[ujSor][ujOszlop].style.background = "gray";
             bentiIndex++;
         } else
             ervenyes = false;
@@ -144,10 +143,12 @@ function aiPalyaErzekeles() {
             let sor = indexek[0];
             let oszlop = indexek[1];
             ujDiv.addEventListener("click", function () {
+                if(!vege){
                 if (!aiDivek[sor][oszlop].classList.contains("lottekra")) {
                     talalatErtekelo("ai", sor, oszlop);
-                    visszaLoves(kovetkezoSor, kovetkezoOszlop, kovetkezoHely);
+                    setTimeout(visszaLoves, 400);
                 }
+            }
             });
         }
     }
@@ -220,81 +221,115 @@ function aiErvenytelenHelyek(sor, oszlop, hossza, fuggoleges) {
 //    
 //}
 
+ 
+
+
 // ha nincs értéke véletlenszerűen választ
-function visszaLoves(kovetkezoHely = 5) {
-console.log("index alapján iws megy: " + lehetsegesIranyok[0]);
-//    lehetsegekIranyok["fuggoleges"] = true;
-//    lehetsegekIranyok["vizszintes"] = true;
-//    
-//alaphelyzetbe állítja ha épp nincs keresendő elem
-    if (!vanBefejezetlenLoves) {
-        lehetsegesIranyok = [true, true, true, true];
-        szukitettLehetosegek = false;
-    }
-
-
-    let ervenyesLoves = true;
+function visszaLoves() {
+    console.log("---------------------------------");
     aiLovesHelyek[aiLovesIndexek] = [];
-//    sor = Math.floor(Math.random() * palyaMeret);
-//    oszlop = Math.floor(Math.random() * palyaMeret);
-//    if (aiLovesHelyek.length > 1)
-        for (var i = 0; i < aiLovesHelyek.length - 1; i++)
-            if (aiLovesHelyek[i][0] === kovetkezoSor && aiLovesHelyek[i][1] === kovetkezoOszlop)
-                ervenyesLoves = false;
+    let talalatEredmeny;
+    //ha még nincs kitűzött célpont, vaktában lő
+    if(!vanBefejezetlenHajoTalalat){
+        ujRandomCelpont();
+    }
+    //ervenyes a cvelpont?
+    let ervenyesLoves =  ervenyesLovesCelpont();
+   
 
-    if (ervenyesLoves) {
+    // ha van épp eltalált hajó, csak tulfutottunk, vagy mellélőttünk akkor is tovább kell engedni
+    if (ervenyesLoves || vanBefejezetlenHajoTalalat) {
+        console.log("itt is jár ám a kód");
         aiLovesHelyek[aiLovesIndexek].push(kovetkezoSor);
         aiLovesHelyek[aiLovesIndexek].push(kovetkezoOszlop);
-        let talalatEredmeny = talalatErtekelo("jatekos", kovetkezoSor, kovetkezoOszlop);
-        if (talalatEredmeny["talalt"] && !talalatEredmeny["sullyedt"]) {
-            vanBefejezetlenLoves = true;
-            if(kovetkezoHely > 4){
-                kovetkezoHely = Math.floor(Math.random() * lehetsegesIranyok.length);
-            }
-            kovetkezoCelpont(kovetkezoSor, kovetkezoOszlop, kovetkezoHely);
+        //ha érvénytelen a lövés, lehet hogy túlindexelés következne be a találat ellenőrzhésekor, ezért nem engedjük lefutni
+        if(ervenyesLoves){
+            talalatEredmeny = talalatErtekelo("jatekos", kovetkezoSor, kovetkezoOszlop);                 //itt történik a konkrét lövés
         }
-        else if(vanBefejezetlenLoves && !talalatEredmeny["talalt"]){
-            kovetkezoCelpont(kovetkezoSor, kovetkezoOszlop, --kovetkezoHely);
+        //ervenytelen lövés esetén vizsgálat nélkül false-ra állítjuk a sikert
+        else{
+            talalatEredmeny = [];
+            talalatEredmeny["talalt"] = false;
+            talalatEredmeny["sullyedt"] = false;
         }
-        if (talalatEredmeny["sullyedt"]) {
-            console.log("sullyedt");
-            vanBefejezetlenLoves = false;
+        if(talalatEredmeny["talalt"] && (!vanBefejezetlenHajoTalalat)){                                  //hajót talált a lövés, és még nem volt bemért hajó
+            vanBefejezetlenHajoTalalat = true;
+            elsoTalaltHajoDivPoz["sor"] = kovetkezoSor;
+            elsoTalaltHajoDivPoz["oszlop"] = kovetkezoOszlop;
+            kovetkezoIrany = Math.floor(Math.random() * lehetsegesIranyok.length-1);                        //kiválaszt 1 random irányt a lehetséges variációk közül
+            console.log("kovetkezo irany: " + kovetkezoIrany);
+            kovetkezoCelpont(kovetkezoIrany);                              //a választott irányt ellenőrzi, és ez alapján uj célpontot határoz meg a következő lövésre
         }
-
-        aiLovesIndexek++;
-    } else{
-        ujRandomCelpont();
+        else if(talalatEredmeny["talalt"] && vanBefejezetlenHajoTalalat && !talalatEredmeny["sullyedt"]){
+            kovetkezoCelpontBeallito("-", false);
+            kovetkezoCelpontBeallito("+", false);
+             console.log("kovetkezo irany: " + kovetkezoIrany);
+            kovetkezoCelpont(kovetkezoIrany);
+        }
+        
+        // itt lövünk újat ha talált hajó közben félrefut a lövés, emiatt negedjük át érvénytelen lövés estén is a függvényt
+        else if(vanBefejezetlenHajoTalalat && !talalatEredmeny["talalt"] || vanBefejezetlenHajoTalalat && !ervenyesLoves){
+             console.log("kovetkezo irany: " + kovetkezoIrany);
+             kovetkezoSor = elsoTalaltHajoDivPoz["sor"];
+             kovetkezoOszlop = elsoTalaltHajoDivPoz["oszlop"];
+             kovetkezoCelpont(--kovetkezoIrany);
+        }
+        else if(talalatEredmeny["sullyedt"]){
+            console.log("sullyedt!!!!!!!!");
+            lehetsegesIranyok = [true, true, true, true];
+            szukitettLehetosegek = false;
+            vanBefejezetlenHajoTalalat = false;
+            keretreNemLovunk(talalatEredmeny["melyikHajo"]);
+            ujRandomCelpont();
+        }
+        else if(ervenyesLoves && !talalatEredmeny["talalt"] &&!vanBefejezetlenHajoTalalat){
+            ujRandomCelpont();
+        }
+        
+    aiLovesIndexek++;
+    }
+    else{
+//        ujRandomCelpont();
+//        console.log("nem sikerült lőni");
+//        
+//        aiLovesIndexek++;
         visszaLoves();
-        }
-//
-//    if(mapDivek[sor][oszlop].classList.contains("hajo")){
-//        mapDivek[sor][oszlop].innerHTML = "!";
-//    }    
-//    else{
-//        mapDivek[sor][oszlop].innerHTML = "x";
-//    }
+    
+    }
 }
 
-function kovetkezoCelpont(sor, oszlop, ertek){
-    if(ertek < 0){
-        ertek = 4;
-        kovetkezoHely = 4;
+function kovetkezoCelpont(ertek, sor = kovetkezoSor, oszlop = kovetkezoOszlop){
+    if(ertek < 0){                                                                  //az irány értékét a legnagyobb lehetséges irányra állítja
+        console.log("érték 0 alá ment, az uj érték:");
+        kovetkezoIrany = 3;              //az eredeti értéket is az adott értékre állítja nem csak a funkción belül
+        ertek=3;
+        console.log(ertek);
     }
-    if (!szukitettLehetosegek){
-                if (oszlop === 0) {
+    if(ertek > 3){                                                                  //az irány értékét a legnagyobb lehetséges irányra állítja
+        console.log("érték 0 alá ment, az uj érték:");
+        kovetkezoIrany = 0;              //az eredeti értéket is az adott értékre állítja nem csak a funkción belül
+        ertek=0;
+        console.log(ertek);
+    }
+        console.log("lehetsegesIranyok: ");
+        console.log(lehetsegesIranyok);
+    if (!szukitettLehetosegek){                                                    //ha első talált van, megnézi minden irányba van e lehetséges lövéspont
+                if (sor === 0 || !ervenyesLovesCelpont(kovetkezoSor - 1, kovetkezoOszlop)){                  //top
                     lehetsegesIranyok[0]=false;
+                    
                 }
-                if (sor === aiDivek.length) {
+                if (oszlop === aiDivek.length || !ervenyesLovesCelpont(kovetkezoSor, kovetkezoOszlop + 1)){      //right
                     lehetsegesIranyok[1] = false;
                 }
-                if (oszlop === aiDivek.length) {
+                if (sor === aiDivek.length || !ervenyesLovesCelpont(kovetkezoSor + 1, kovetkezoOszlop)) {      //bot
                     lehetsegesIranyok[2] = false;
                 }
 
-                if (sor === 0) {
+                if (oszlop === 0 || !ervenyesLovesCelpont(kovetkezoSor, kovetkezoOszlop - 1)) {                    //left
                     lehetsegesIranyok[3] = false;
                 }
-
+                console.log("szükites utám: ");
+                console.log(lehetsegesIranyok);
                 szukitettLehetosegek = true;
             }
             console.log("ertek: " + ertek);
@@ -304,7 +339,9 @@ function kovetkezoCelpont(sor, oszlop, ertek){
                         kovetkezoSor -= 1; 
                     }
                     else{
-                        kovetkezoHely = 5;
+                        
+//                        kovetkezoCelpontLepteto("-");
+                        kovetkezoCelpont(--kovetkezoIrany);
                     }
 //                       visszaLoves(sor - 1, oszlop, ertek); 
 //                            visszaLoves(sor -1, oszlop);
@@ -319,7 +356,9 @@ function kovetkezoCelpont(sor, oszlop, ertek){
                         
                     }
                     else
-                        kovetkezoHely = 5;
+                        
+//                        kovetkezoCelpontLepteto("-");
+                        kovetkezoCelpont(--kovetkezoIrany);
                     
                     
 //                       visszaLoves(sor, oszlop + 1, ertek);
@@ -336,7 +375,9 @@ function kovetkezoCelpont(sor, oszlop, ertek){
                         kovetkezoSor += 1; 
                     }
                     else
-                        kovetkezoHely = 5;
+                        
+//                        kovetkezoCelpontLepteto("-");
+                        kovetkezoCelpont(--kovetkezoIrany);
 //                       visszaLoves(sor + 1, oszlop, ertek);
 //                            visszaLoves(sor + 1, oszlop);
 //                    lehetsegesIranyok.splice(kovetkezoHely, 1);
@@ -352,7 +393,8 @@ function kovetkezoCelpont(sor, oszlop, ertek){
                         kovetkezoOszlop -= 1; 
                     }
                     else
-                        kovetkezoHely = 5;
+//                        kovetkezoCelpontLepteto("-");
+                       kovetkezoCelpont(--kovetkezoIrany);
                     
 //                       visszaLoves(sor, oszlop - 1, ertek);
 //                            visszaLoves(sor, oszlop - 1);
@@ -367,4 +409,88 @@ function kovetkezoCelpont(sor, oszlop, ertek){
 function ujRandomCelpont(){
     kovetkezoSor = Math.floor(Math.random() * palyaMeret);
     kovetkezoOszlop = Math.floor(Math.random() * palyaMeret);
+}
+
+function ervenyesLovesCelpont(celSor = kovetkezoSor, celOszlop = kovetkezoOszlop){
+    eredmeny = true;
+    console.log("vcelSor: " + celSor);
+    console.log("vcelOszlop: " + celOszlop);
+    if (celOszlop > aiDivek.length-1 || celOszlop < 0 || celSor > aiDivek.length-1 || celSor < 0){
+        eredmeny = false;
+    }
+   if(!eredmeny === false){ 
+    for (var i = 0; i < aiLovesHelyek.length - 1; i++)
+                     //ha már lőttün oda vagy kisebb vagy nagyobb mint a pálya akkor false
+                     if(aiLovesHelyek[i][0] === celSor && aiLovesHelyek[i][1] === celOszlop)
+                         return false;
+    }
+                
+     return eredmeny;
+}
+
+// növelt és csökkentet értékeket adott értékre állít, hasznos amikor egy-egy iráyn tki akarunk zárni a lehetségesek közül mert a másik skálán volt már találat
+function kovetkezoCelpontBeallito(irany, ertek){
+    console.log("*-*-*-*-*-*-*-*-*-*-*-*-*");
+    console.log("nézzük: ");
+    console.log("következő irány: " + kovetkezoIrany);
+    for (var i = 0; i < lehetsegesIranyok.length; i++) {
+        console.log(lehetsegesIranyok[i]);
+    }
+    if(irany === "-"){
+        if(kovetkezoIrany - 1 < 0){
+            console.log("koviirany: " + kovetkezoIrany-1);
+            lehetsegesIranyok[3] = ertek;
+            console.log("lehetsges irányok 3: " + lehetsegesIranyok[3]);
+        }
+        else{
+         console.log("lehetséges irály else ágban kovetkezoirany -1: " + parseInt(kovetkezoIrany -1));   
+            lehetsegesIranyok[kovetkezoIrany-1] = ertek;
+            console.log("és konkrétan: " + lehetsegesIranyok[kovetkezoIrany-1]);
+        }
+    }
+    else{
+        if(kovetkezoIrany + 1 > 3){
+            
+            console.log("lehetsges irányok 0: " + lehetsegesIranyok[0]);
+            lehetsegesIranyok[0] = ertek;
+            console.log("allitas után: " + lehetsegesIranyok[0]);
+        }
+        else{
+            console.log("lehetsges irányok kovetkezo + 1: " + parseInt(kovetkezoIrany + 1));
+            lehetsegesIranyok[kovetkezoIrany + 1] = ertek;
+            console.log("allitas utan: " + lehetsegesIranyok[kovetkezoIrany + 1]);
+        }
+    }
+
+    console.log("nézzük újra: ");
+    for (var i = 0; i < lehetsegesIranyok.length; i++) {
+        console.log(lehetsegesIranyok[i]);
+    }
+}
+
+function keretreNemLovunk(melyikHajo){
+     console.log(aiLovesHelyek);
+    
+    console.log("jatekoskeret melyikhajo");
+    console.log(jatekosKeretek[melyikHajo]);
+   let jatekosKeretei = jatekosKeretek[melyikHajo];
+    
+    
+    
+    for (var i = 0; i < jatekosKeretei.length; i++) {
+        
+         let lottSor = jatekosKeretei[i][0];
+         console.log("lottosor");
+    console.log(lottSor);
+         let lottOszlop = jatekosKeretei[i][1];
+    console.log("lottOszlop");
+    console.log(lottOszlop);
+        if(ervenyesLovesCelpont(lottSor, lottOszlop)){
+            aiLovesIndexek++;
+            aiLovesHelyek[aiLovesIndexek]=[];
+            aiLovesHelyek[aiLovesIndexek].push(lottSor, lottOszlop);
+        }
+        
+    }
+    console.log(aiLovesHelyek);
 }
