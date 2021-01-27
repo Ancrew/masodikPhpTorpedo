@@ -66,8 +66,8 @@ transition: 2s;
 }*/
 #jatekosPalyaKeret{
     display:grid;
-    height:40vh;
-    width:40vh;
+    height:30vh;
+    width:30vh;
     margin-top:20vh;
     grid-column:2/3;
     grid-row:1/2;
@@ -75,8 +75,8 @@ transition: 2s;
 }
 #jatekosPalyaKeretKesz{
     display:grid;
-    height:40vh;
-    width:40vh;
+    height:25vh;
+    width:25vh;
     margin-top:20vh;
     grid-column:2/3;
     /*z-index: 1;*/
@@ -87,8 +87,8 @@ transition: 2s;
 #aiPalyaKeret{
     display:grid;
     margin-top:20vh;
-      height:40vh;
-    width:40vh;
+      height:30vh;
+    width:30vh;
     grid-column:2/3;
     grid-row:1/2;
         margin-right: 0px;
@@ -257,24 +257,29 @@ transition: 2s;
 }*/
 
 
-@media screen and (max-width: 700px){
-    #kozosKeret{
+@media screen and (max-width: 1100px){
+    
+#kozosKeret{
    grid-template-columns:1fr;
    grid-template-rows:repeat(2, 1fr);
 }
 #jatekosPalyaKeret{
-     transform:
+    transform:
         translateX(0%) 
         translateY(-60%) !important;
     margin-top:10vh;
 /*    height:45vh !important;
     width:30vh !important;*/
+/*    height:35vw !important;
+    width:35vw !important;*/
+    min-width:25vw;
+    min-height:25vw;
     grid-column:1/2;
-    grid-row:2/3;
+    grid-row:2/3; 
     margin:auto auto auto auto !important;
     /*font-size:14px;*/
 }
-#jatekosPalyaKeretKesz{
+/*#jatekosPalyaKeretKesz{
      display:grid;
     margin-top:20vh;
     grid-column:2/3;
@@ -287,16 +292,20 @@ transition: 2s;
     margin:10vh auto 30vh auto !important;
     height: auto    !important;
     width:auto  !important;
-    /*font-size:14px;*/
-}
+    font-size:14px;
+}*/
 
 #aiPalyaKeret{
     margin-top:10vh;
     grid-column:1/2;
     grid-row:1/2;
+    transform:
+        translateX(0%) !important;
     margin:10vh auto 20vh auto !important;
-     height: auto !important;
-    width:auto !important;
+/*     height: auto !important;
+    width:auto !important;*/
+/*    height: 35vw !important;
+    width: 35vw !important;*/
     /*font-size:14px;*/
 }
 #kozosKeret{
@@ -310,7 +319,7 @@ transition: 2s;
 }*/
 #jatekosPalyaKeret{
         display:grid;
-    margin-top:20vh;
+    /*margin-top:20vh;*/
     grid-column:2/3;
     grid-row:1/2;
       transform:
@@ -318,8 +327,12 @@ transition: 2s;
     /*margin-top:10vh;*/
     grid-column:1/2;
     grid-row:2/3;
-    margin:20vh auto 30vh auto !important;
-    height: auto    !important;
-    width:auto  !important;
+    margin:10vh auto 20vh auto !important;
+/*    height: auto    !important;
+    width:auto  !important;*/
+}
+#hajoTartalmazo{
+    /*min-width:2rem;*/
+    /*min-width:20rem;*/
 }
 }
