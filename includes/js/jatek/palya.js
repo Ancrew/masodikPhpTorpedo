@@ -68,13 +68,11 @@ function reseteles(){
             }
         }
         hajoDivTorlo();
-        
     indul.disabled = "true";
      
 }
 
 function felkeszules() {
-//let ujDiv;
     for (var i = 0; i < mapDivek.length; i++) {
         for (var e = 0; e < mapDivek.length; e++) {
                let ujDiv = mapDivek[i][e];
@@ -135,8 +133,8 @@ function makeKorbeKarakter(className, anya, index = 0) {
             case "vizszintes":
                 divem = makeDiv("vizszintes", anya);
                 divem.style.border = "none";
-//                divem.innerHTML = (index + 10).toString(36);                    //a-tól indítva kiírja a koordinátákat
-                divem.innerHTML = String.fromCharCode(index + 65);
+                 
+                divem.innerHTML = String.fromCharCode(index + 65);               //a-tól indítva kiírja a koordinátákat
                                  
                 break;
             case "fuggoleges":
@@ -210,14 +208,9 @@ function cssBeallit(melyiket) {
             
             aiKeret.style.gridTemplateRows ="1fr " +palyaMeret + "fr";
             keret.style.gridTemplateRows ="1fr " +palyaMeret + "fr";
-                  gombok.style.height = "0%"; 
-//            keret.style.height = "40vh";
-//            aiKeret.style.height = "40vh";
-//            keret.style.width = "40vh";
-//            aiKeret.style.width = "40vh";
             resetelo.style.height = "0%";
-                    indul.style.height = "0%";
-                    indul.style.opacity = "0%";
+            indul.style.height = "0%";
+            indul.style.opacity = "0%";
             resetelo.style.opacity = "0%";
 
                gombok.style.display = "none";
