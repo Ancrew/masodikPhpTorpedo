@@ -1,12 +1,10 @@
      
      
-//     let hal = class Hal{
      class Hal{
          constructor(melyik){
          this.halam = melyik;
          this.halam.style.left =  20 + 'px';
          this.halam.style.height = 30 +  'px';
-//         console.log("hal: " + melyik.style.height);
          this.mehet = false;                                                    //benne van e az egér hatúsugarában
          this.halH = 9;
          this.halW = 24;                                    
@@ -16,8 +14,6 @@
          this.forgasok = 0;                                                     //aktuális forgás (%)
          this.elertMeret= true;                                                 //változik e éppen
          this.z = 0;                                                            //Z-index, aki hátrébb van kerüüljön alacsonyabb számú rétegbe is.
-//         console.log("halw: " + this.tisztitott(this.halam.style.width));
-//         this.hal = document.getElementsByClassName('halacska')[i];
          this.x = this.getUjX();
          this.y = this.getUjY();
          this.halam.style.left = x  + 'px';
@@ -30,7 +26,7 @@
          this.halSebessegY = this.getUjY();
          this.szog = 0;
          this.hatotav = Math.random() * 150 + 90;                                //az egértől számított érték, ahol ah alak reakcióba lépnek a cursorral
-//         this.el = true;
+
      }
          
           hatoTavban(x, y){
@@ -58,7 +54,6 @@
                 let eredmeny;
                 let bodyPos = document.body.getBoundingClientRect();
                 let posok = this.halam.getBoundingClientRect();
-//                console.log(posok);
                 switch(ezt){
                     
                     case("x"):
@@ -86,7 +81,6 @@
             
             //Halak mozgatása
              anim(x, y){
-//                if(x !== null ){
                     this.hatoTavban(x, y);
                     let ujX=this.halXMozgas();
                     this.halam.style.left = ujX+"px";
@@ -99,7 +93,6 @@
                             this.celMeret = 1;
                             this.maxSebesseg = Math.random() * 8 + 6;
                             this.halSebesseg = this.maxSebesseg;
-//                            this.aktSebesseg = this.halSebesseg;
                                 
                         }           
                         this.forgasMero(y);
@@ -108,15 +101,10 @@
                         this.halam.style.top = this.halSebessegY;
                         this.meretezo();
                         let scaleString = " scale(" + this.aktMeret + ")";
-//                        console.log(this.aktMeret);
                         this.halam.style.transform += scaleString;
                         let rotateXString = " rotateX(" + this.forgasok + "deg)";
                         let rotateYString = " rotateY(" + this.forgasok + "deg)";
                         let rotateZString = " rotateZ(" + this.forgasok + "deg)";
-//                        let rotateString = " rotateY(" + this.forgasY + "deg)";
-//                        this.halam.style.transform += rotateXString;
-//                        this.halam.style.transform += rotateYString;
-//                        this.halam.style.transform += rotateZString;
                         this.halam.style.transform += rotateXString;
                         this.halam.style.transform += rotateYString;
                         this.halam.style.transform += rotateZString;
@@ -212,8 +200,6 @@
              getUjCelMeret(){
                  if (this.celMeret >= this.minMeret){
                  this.celMeret = this.aktMeret -  Math.random() * (0.05) + 0.02; 
-                 
-                 console.log("celmeret: :"+this.celMeret);
                  return this.celMeret;
              }
              }
@@ -227,37 +213,17 @@
                     if(this.forgasok > -32){
                          this.forgasok -=10;
                          this.z--;
-//                        this.forgasX += 8;
-//                        this.forgasY += 8;
-//                        this.forgasZ += 8;
                     }
-//                    console.log("tavolsagSebesseg: " + tavolodasSebesseg);
                      this.aktMeret -= tavolodasSebesseg;
                  }
                  else{
                     this.celMeret = this.getUjCelMeret();
-//                     console.log("celmeret: " + this.celMeret);
-//                 console.log("aktmeret: " + this.aktMeret);
                  }
              }
              else {
                  if (this.forgasok < 0){
                      this.forgasok += 10;
                  }
-//                 if(this.forgasX > 0){
-//                    this.forgasX--;
-//                 }
-//                 if(this.forgasY > 0){
-//                    this.forgasY--;
-//                 }
              }
          }
-         
-//         getEloHal(){
-//             return this.el;
-//         }
-           
      };
-     
-//     module.exports.Hal = Hal;
-//

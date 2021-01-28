@@ -1,20 +1,17 @@
 #jatekosPalyaKeret{
     margin:auto;
-    margin-top:15vh;
+    margin-top:10vh;
     margin-left:0px;
+    transform: 
+        translateX(-50%);
 }
 
 #aiPalyaKeret{
-    margin-top:20vh;
-    margin-right: 0px;
+    margin : 20vh auto auto auto;
     transform:
-        translateX(100%);
+        translateX(60%);
     z-index:-1;
     opacity: 0%;
-}
-
-#jatekosPalyaKeret{
-    /*font-size:14px;*/
 }
 
 #reset{

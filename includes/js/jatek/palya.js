@@ -157,12 +157,8 @@ function makeDiv(classNev, anya) {
 function cssBeallit(melyiket) {
     switch (melyiket) {
         case keret:
-            keret.style.margin = "auto";
-            keret.style.marginTop = "10vh";
-            keret.style.marginLeft = "0px";
             keret.style.gridTemplateColumns = "1fr " + palyaMeret + "fr";
             keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr 5fr 1fr";
-            keret.style.transform = "translateX(-50%)";
             keret.style.width = 2 * (1 + palyaMeret) + "vw";
             keret.style.height = 2 * (8 + palyaMeret) + "vw";
             break;
@@ -177,15 +173,12 @@ function cssBeallit(melyiket) {
             fuggolegesKeret.style.gridTemplateRows = "repeat(" + palyaMeret + ", 1fr)";
             break;
         case hajoTartalmazo:
-            hajoTartalmazo.style.height = "auto";
-            hajoTartalmazo.style.width = "auto";
             hajoTartalmazo.style.gridTemplateRows = "repeat(" + 5 + "," + "1fr)";
             hajoTartalmazo.style.gridTemplateColumns = "repeat(" + 4 + "," + "1fr)";
             hajoTartalmazo.style.justifyContent = "space-around";
             break;
             
         case "ai":
-            aiKeret.style.marginTop = "20vh";
             aiKeret.style.gridTemplateColumns = "1fr " + palyaMeret + "fr";
             aiTartalmazo.style.gridTemplateRows = "repeat(" + palyaMeret + ", 1fr)";
             aiTartalmazo.style.gridTemplateColumns = "repeat(" + palyaMeret + ", 1fr)";
@@ -204,16 +197,18 @@ function cssBeallit(melyiket) {
             
             aiKeret.style.transitionDuration = "0s";
             keret.style.transitionDuration = "0s";
-            keret.style.margin = "20vh auto auto auto";
-            
+            resetelo.style.transitionDuration = "0s";
+            indul.style.transitionDuration = "0s";
             aiKeret.style.gridTemplateRows ="1fr " +palyaMeret + "fr";
             keret.style.gridTemplateRows ="1fr " +palyaMeret + "fr";
+            
+            keret.style.width = 2 * (4 + palyaMeret) + "vw";
+            keret.style.height = 2 * (4 + palyaMeret) + "vw";
+            keret.style.marginTop = "20vh";
+            keret.style.transform = "translateX(-50%)";
             resetelo.style.height = "0%";
             indul.style.height = "0%";
-            indul.style.opacity = "0%";
-            resetelo.style.opacity = "0%";
-
-               gombok.style.display = "none";
+            gombok.style.display = "none";
             hajoTartalmazo.style.display = "none";
             keret.style.left = "auto";
             
@@ -221,19 +216,17 @@ function cssBeallit(melyiket) {
 
         case "jatekKezdes":
             keret.style.transitionDuration = "2s";
-            keret.style.transform = "translateX(0%)";
             aiKeret.style.zIndex = "0";
             keret.style.opacity = "100%";
             aiKeret.style.transitionDuration = "2s";
-//            keret.style.height = "40vh";
-//            aiKeret.style.height = "40vh";
-            keret.style.width = 2 * (4 + palyaMeret) + "vw";
-            keret.style.height = 2 * (4 + palyaMeret) + "vw";
             aiKeret.style.width = 2 * (4 + palyaMeret) + "vw";
             aiKeret.style.height = 2 * (4 + palyaMeret) + "vw";
             aiKeret.style.opacity = "100%";
             aiKeret.style.margin = "20vh auto auto auto";
-            aiKeret.style.transform = "translateX(0%)";
+            keret.style.margin = "20vh auto auto auto";
+            
+            keret.style.transform = "translateX(0%)";
+//            aiKeret.style.transform = "translateX(0%)";
             aiKeret.style.transform = "translateX(-50%)";
             
             break;
@@ -525,12 +518,11 @@ function jatekIndul() {
     }, 500);
     setTimeout(function () {
           cssBeallit("elokeszit");
-       ;0
     }, 1500);
      
     setTimeout(function () {
     cssBeallit("jatekKezdes");
-    }, 1550);
+    }, 1600);
 
 } 
 

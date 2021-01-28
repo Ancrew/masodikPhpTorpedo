@@ -25,18 +25,8 @@
 
 #aiPalyaKeret{
     display:grid;
-    margin-top:20vh;
-      height:30vh;
-    width:30vh;
     grid-column:1/2;
     grid-row:1/2;
-        margin-right: 0px;
-    transform:
-        translateX(100%);
-    z-index:-1;
-    opacity: 0%;
-    
-    /*font-size:14px;*/
 }
 
 
@@ -44,4 +34,89 @@
 
 #reset{
     grid-column:2/3;
+}
+
+#hajoTartalmazo{
+    height: auto;
+    width: auto;
+}
+
+@media screen and (max-width: 1100px){
+    
+#kozosKeret{
+   grid-template-columns:1fr;
+   grid-template-rows:repeat(2, 1fr);
+}
+#jatekosPalyaKeret{
+    transform:
+        translateX(0%) 
+        translateY(-60%) !important;
+    margin-top:10vh;
+/*    height:45vh !important;
+    width:30vh !important;*/
+/*    height:35vw !important;
+    width:35vw !important;*/
+    min-width:25vw;
+    min-height:25vw;
+    grid-column:2/3;
+    grid-row:2/3; 
+    margin:auto auto auto auto !important;
+    /*font-size:14px;*/
+}
+/*#jatekosPalyaKeretKesz{
+     display:grid;
+    margin-top:20vh;
+    grid-column:2/3;
+    grid-row:1/2;
+      transform:
+        translateX(0%);
+    margin-top:10vh;
+    grid-column:1/2;
+    grid-row:2/3;
+    margin:10vh auto 30vh auto !important;
+    height: auto    !important;
+    width:auto  !important;
+    font-size:14px;
+}*/
+
+#aiPalyaKeret{
+    margin-top:10vh;
+    grid-column:1/2;
+    grid-row:1/2;
+    transform:
+        translateX(0%) !important;
+    margin:10vh auto 20vh auto !important;
+/*     height: auto !important;
+    width:auto !important;*/
+/*    height: 35vw !important;
+    width: 35vw !important;*/
+    /*font-size:14px;*/
+}
+#kozosKeret{
+    height:100%;
+    width:100%;
+}
+
+/*#jatekosPalyaKeret{
+    width:auto !important;
+    height:auto !important;
+}*/
+#jatekosPalyaKeret{
+        display:grid;
+    /*margin-top:20vh;*/
+    grid-column:2/3;
+    grid-row:1/2;
+      transform:
+        translateX(0%);
+    /*margin-top:10vh;*/
+    grid-column:1/2;
+    grid-row:2/3;
+    margin:10vh auto 20vh auto !important;
+/*    height: auto    !important;
+    width:auto  !important;*/
+}
+#hajoTartalmazo{
+    /*min-width:2rem;*/
+    /*min-width:20rem;*/
+}
 }

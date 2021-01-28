@@ -1,6 +1,5 @@
 body{
-    /*display:fixed;*/
-    position:absolute;
+    /*position:absolute;*/
     max-width:100%;
     overflow-x:hidden;
     /*background-image: linear-gradient(#0000ff,blue);*/
