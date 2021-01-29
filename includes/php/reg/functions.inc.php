@@ -76,13 +76,13 @@
      mysqli_stmt_bind_param($stmt, "sss", $user, $hashedPwd, $email);
      mysqli_stmt_execute($stmt);
      mysqli_Stmt_close($stmt);
-     header ("location: ../../../reg.php?error=none");
+//     header ("location: ../../../reg.php?error=none");
 //     exit();
  }
  
   function createProfil($conn){
      $ertek=32;
-     $sql = "INSERT INTO profil (betuMeret) VALUES (?)";
+     $sql = "INSERT INTO profil (palyaMeret) VALUES (?)";
      $stmt = mysqli_stmt_init($conn);
      if (!mysqli_stmt_prepare($stmt, $sql)) {
         header ("location: ../../../reg.php?error=stmtfailed");

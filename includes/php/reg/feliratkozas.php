@@ -33,7 +33,7 @@ if(isset($_POST["submit"])){
         header ("location: ../reg.php?error=usernametaken");
         exit();
     }
-//    createUser($conn, $user, $email, $pass);
+    createUser($conn, $user, $email, $pass);
     createProfil($conn);
 }
 else{
