@@ -1,7 +1,7 @@
 <div id="regfelulet">
     <div id="reg">
         <h1>Kezdjük is el!</h1>
-           <form action="includes/feliratkozas.php" method="post">
+           <form id = "regForm" action="includes/feliratkozas.php" method="post">
                 <label for="user">Felhasználónév</label>
                 <input type="text" name="user" value="">
                 <label for="pass">Jelszó</label>

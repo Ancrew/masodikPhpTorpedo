@@ -40,7 +40,7 @@ let gombok = document.getElementById("gombok");
 init();
 
 function init() {
-//    indul.disabled = "true";
+    indul.disabled = "true";
 
     makePalya("jatekos");
     makePalya("ai");

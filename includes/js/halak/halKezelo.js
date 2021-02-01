@@ -25,7 +25,7 @@
         for (var i = 0; i < halacskak.length; i++) {
             
              halaim.push(new Hal(halacskak[i]));
-            itemAtHelyez(halacskak[i], "halusztato")
+            itemAtHelyez(halacskak[i], "halusztato");
         
         }
 //        itemAtHelyez(vilagitosHal, "halusztato");
