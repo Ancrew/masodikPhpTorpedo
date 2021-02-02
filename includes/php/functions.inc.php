@@ -119,7 +119,7 @@
      }
 
      
-     $pwdHashed = $uidExists["pass"];
+     $pwdHashed = $uidExists["pwd"];
      
      $checkPwd = password_verify($pwd, $pwdHashed);
      

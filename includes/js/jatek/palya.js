@@ -372,8 +372,8 @@ function nincsTobbIlyen(hajoReszek) {
     if (--hatraLevoHajok === 0) indul.disabled = false;
 }
 
-function classValto(sor, oszlop, ujNev) {
-    mapDivek[sor][oszlop].className = ujNev;
+function classValto(sor, oszlop, ujNev, melyikPalya = mapDivek) {
+    melyikPalya[sor][oszlop].className = ujNev;
 }
 
 function classNevEllenorzo(sor, oszlop, classNev) {

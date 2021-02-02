@@ -121,7 +121,9 @@ function aiPalyaErzekeles() {
             ujDiv.addEventListener("click", function () {
                 if(!vege){
                 if (!aiDivek[sor][oszlop].classList.contains("lottekra")) {
-                    talalatErtekelo(aiDivek, aiHajok, sor, oszlop);
+                    let jatekosTalalt = talalatErtekelo(aiDivek, aiHajok, sor, oszlop);
+                    if(jatekosTalalt["sullyedt"]) 
+                        console.log("Sullyedt");        
                     setTimeout(visszaLoves, 400);
                 }
             }
