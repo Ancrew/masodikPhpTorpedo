@@ -1,0 +1,52 @@
+
+#teljesHajo{
+    animation:ablakBeuszas 6s ease-out forwards;
+}
+
+#hullamozzunk{
+    animation:hullamozzunk ease-in-out 2s infinite;
+    transform-origin: 60px 60px;
+}
+#hullamkeret{
+    animation: hullamzas 2s linear infinite;
+}
+
+
+@keyframes hullamozzunk{
+     0%{
+        transform: rotateZ(0deg);
+    }
+    
+    33%
+    {
+        transform: rotateZ(-0.5deg);
+    }
+    
+    66%{
+        transform: rotateZ(0.5deg);
+    }
+
+}
+@keyframes hullamzas {
+    from{
+      transform:translateX(0vh);
+    }
+
+
+    to{
+       transform:translateX(-94px);
+       
+    }   
+}
+
+@keyframes ablakBeuszas{
+
+    0%{
+       transform:translateX(-390px);
+    }
+
+    100%{
+         transform:translateX(0px);
+    }
+}
+

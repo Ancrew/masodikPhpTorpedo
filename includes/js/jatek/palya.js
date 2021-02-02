@@ -6,6 +6,8 @@ var lerak = false;                                                              
 var hossz = 0;                                                                  //aktuálisan lerakandó hajó hossza
 let jatekosKeretek = [];
 let jatekosKeretIndex = 0;
+
+//let index = 0;
 var ervenyesLerakas;                                                            //lerakhatom e a hajot az adott helyre
 var lerakottak = [];                                                            //lerakott hajok
 var sikeresLerakas = false;                                                     //sikerült e lerakni
@@ -18,7 +20,7 @@ var hajoFajtak = [["kettesHajo", 2, 2], ["harmasHajo", 2, 3], ["negyesHajo", 1, 
 let jatekInditas=false;
 let celpont = [];                                                               //array, 0-ik index = sor 1es index = oszlop
 let jatekosHajok = [];        
-let jatekosHajoIndex = 0;
+let index = 0;
 let vege = false;
 let aiHajok = [];
 
@@ -40,14 +42,8 @@ init();
 function init() {
     indul.disabled = "true";
 
-//    cssBeallit("ai");
-//    cssBeallit("elokeszit");
-//    cssBeallit("jatekKezdes");
-    
-    
     makePalya("jatekos");
     makePalya("ai");
-   
     
     makeHajok();
     cssBeallit(keret);
@@ -57,7 +53,6 @@ function init() {
     cssBeallit(hajoTartalmazo);
      
     felkeszules();
-//    felkeszules("ai");
     
     resetelo.addEventListener("click", function(){
        reseteles();
@@ -73,24 +68,18 @@ function reseteles(){
             }
         }
         hajoDivTorlo();
-        
     indul.disabled = "true";
-       //makeHajok();
      
 }
 
 function felkeszules() {
-//let ujDiv;
     for (var i = 0; i < mapDivek.length; i++) {
         for (var e = 0; e < mapDivek.length; e++) {
-//            if (tulaj==="jatekos"){
                let ujDiv = mapDivek[i][e];
-//            }
 
             let indexek = [i, e];
             let sor = indexek[0];
             let oszlop = indexek[1];
-//            if(tulaj ==="jatekos"){
                 ujDiv.addEventListener("wheel", function () {
                     forgat(sor, oszlop);
                 });
@@ -107,15 +96,10 @@ function felkeszules() {
                     veglegesit(sor, oszlop);
 
                 });
-//            }
         }
     }
 }
 
-//function getLovesHelye(sor, oszlop){
-//    let helyek = [sor, oszlop];
-//    return helyek;
-//}
 
 function makePalya(tulaj) {                                                     //Pálya előkészítése játékra
    //koordináták kiírása a pálya köré
@@ -149,8 +133,8 @@ function makeKorbeKarakter(className, anya, index = 0) {
             case "vizszintes":
                 divem = makeDiv("vizszintes", anya);
                 divem.style.border = "none";
-//                divem.innerHTML = (index + 10).toString(36);                    //a-tól indítva kiírja a koordinátákat
-                divem.innerHTML = String.fromCharCode(index + 65);
+                 
+                divem.innerHTML = String.fromCharCode(index + 65);               //a-tól indítva kiírja a koordinátákat
                                  
                 break;
             case "fuggoleges":
@@ -173,12 +157,8 @@ function makeDiv(classNev, anya) {
 function cssBeallit(melyiket) {
     switch (melyiket) {
         case keret:
-            keret.style.margin = "auto";
-            keret.style.marginTop = "10vh";
-            keret.style.marginLeft = "0px";
             keret.style.gridTemplateColumns = "1fr " + palyaMeret + "fr";
             keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr 5fr 1fr";
-            keret.style.transform = "translateX(-50%)";
             keret.style.width = 2 * (1 + palyaMeret) + "vw";
             keret.style.height = 2 * (8 + palyaMeret) + "vw";
             break;
@@ -193,15 +173,12 @@ function cssBeallit(melyiket) {
             fuggolegesKeret.style.gridTemplateRows = "repeat(" + palyaMeret + ", 1fr)";
             break;
         case hajoTartalmazo:
-            hajoTartalmazo.style.height = "auto";
-            hajoTartalmazo.style.width = "auto";
             hajoTartalmazo.style.gridTemplateRows = "repeat(" + 5 + "," + "1fr)";
             hajoTartalmazo.style.gridTemplateColumns = "repeat(" + 4 + "," + "1fr)";
             hajoTartalmazo.style.justifyContent = "space-around";
             break;
             
         case "ai":
-            aiKeret.style.marginTop = "20vh";
             aiKeret.style.gridTemplateColumns = "1fr " + palyaMeret + "fr";
             aiTartalmazo.style.gridTemplateRows = "repeat(" + palyaMeret + ", 1fr)";
             aiTartalmazo.style.gridTemplateColumns = "repeat(" + palyaMeret + ", 1fr)";
@@ -220,21 +197,18 @@ function cssBeallit(melyiket) {
             
             aiKeret.style.transitionDuration = "0s";
             keret.style.transitionDuration = "0s";
-            keret.style.margin = "20vh auto auto auto";
-            
+            resetelo.style.transitionDuration = "0s";
+            indul.style.transitionDuration = "0s";
             aiKeret.style.gridTemplateRows ="1fr " +palyaMeret + "fr";
             keret.style.gridTemplateRows ="1fr " +palyaMeret + "fr";
-                  gombok.style.height = "0%"; 
-            keret.style.height = "40vh";
-            aiKeret.style.height = "40vh";
-            keret.style.width = "40vh";
-            aiKeret.style.width = "40vh";
+            
+            keret.style.width = 2 * (4 + palyaMeret) + "vw";
+            keret.style.height = 2 * (4 + palyaMeret) + "vw";
+            keret.style.marginTop = "20vh";
+            keret.style.transform = "translateX(-50%)";
             resetelo.style.height = "0%";
-                    indul.style.height = "0%";
-                    indul.style.opacity = "0%";
-            resetelo.style.opacity = "0%";
-
-               gombok.style.display = "none";
+            indul.style.height = "0%";
+            gombok.style.display = "none";
             hajoTartalmazo.style.display = "none";
             keret.style.left = "auto";
             
@@ -242,15 +216,17 @@ function cssBeallit(melyiket) {
 
         case "jatekKezdes":
             keret.style.transitionDuration = "2s";
-            keret.style.transform = "translateX(0%)";
             aiKeret.style.zIndex = "0";
             keret.style.opacity = "100%";
             aiKeret.style.transitionDuration = "2s";
-            keret.style.height = "40vh";
-            aiKeret.style.height = "40vh";
+            aiKeret.style.width = 2 * (4 + palyaMeret) + "vw";
+            aiKeret.style.height = 2 * (4 + palyaMeret) + "vw";
             aiKeret.style.opacity = "100%";
             aiKeret.style.margin = "20vh auto auto auto";
-            aiKeret.style.transform = "translateX(0%)";
+            keret.style.margin = "20vh auto auto auto";
+            
+            keret.style.transform = "translateX(0%)";
+//            aiKeret.style.transform = "translateX(0%)";
             aiKeret.style.transform = "translateX(-50%)";
             
             break;
@@ -266,13 +242,12 @@ function hajoDivTorlo(kellUj = true){
    let hajoDb = hajokhoz.length;
    let index = 0;
    while(index < hajoDb){
-//       hajokhoz[0].style.height = "0px";
         hajokhoz[0].remove();
         index++;  
    }
-   if(kellUj){
-   makeHajok();
-   }
+   if(kellUj)
+     makeHajok();
+   
 }
 
 // a pálya alatt lévő hajók kirajzolása, amikre kattintva a pályára kirakhatóak lesznek a hajók.
@@ -330,25 +305,27 @@ function veglegesit(sor, oszlop) {
     let hajoReszek;
     if (ervenyesLerakas) {
         if (lerak) {
-            jatekosHajok[jatekosHajoIndex] = [];
+            jatekosHajok[index] = [];
             if (hosszaban) {
                 for (var i = 0; i < hossz; i++){
                     classValto(sor + i, oszlop, "hajo foglalt");
-                    jatekosHajok[jatekosHajoIndex][i] = [];
-                    jatekosHajok[jatekosHajoIndex][i].push(sor + i);
-                    jatekosHajok[jatekosHajoIndex][i].push(oszlop);
+                    jatekosHajok[index][i] = [];
+                    jatekosHajok[index][i].push(sor + i);
+                    jatekosHajok[index][i].push(oszlop);
                 }
-                keretSzamolo(sor, oszlop);
-                keretKirajzolo(jatekosHajoIndex);
+                jatekosKeretek.push(keretSzamolo(sor, oszlop, hosszaban));
+                keretKirajzolo();
+                jatekosKeretIndex++;
             } else {
                 for (var i = 0; i < hossz; i++){
                     classValto(sor, oszlop + i, "hajo foglalt");
-                    jatekosHajok[jatekosHajoIndex][i] = [];
-                    jatekosHajok[jatekosHajoIndex][i].push(sor);
-                    jatekosHajok[jatekosHajoIndex][i].push(oszlop + i);
+                    jatekosHajok[index][i] = [];
+                    jatekosHajok[index][i].push(sor);
+                    jatekosHajok[index][i].push(oszlop + i);
                 }
-                keretSzamolo(sor, oszlop);
-                keretKirajzolo(jatekosHajoIndex);
+                jatekosKeretek.push(keretSzamolo(sor, oszlop, hosszaban));
+                keretKirajzolo();
+                jatekosKeretIndex++;
             }
             switch (hossz) {
                 case 2:
@@ -380,7 +357,7 @@ function veglegesit(sor, oszlop) {
                     }
                     break;
             }
-            jatekosHajoIndex++;
+            index++;
         }
         this.lerak = false;
         
@@ -470,92 +447,64 @@ function ervenyesKeret(sor, oszlop) {
     return eredmeny;
 }
 
-function keretSzamolo(kezdoSor, kezdoOszlop, tulajdonos) {
-    jatekosKeretek[jatekosHajoIndex]= [];
-    jatekosKeretIndex = 0;
+
+// Adott hajók kereteit teszi tömbbe, majd visszatér a tömbbel
+function keretSzamolo(kezdoSor, kezdoOszlop, hosszaban, hajoHossz = hossz) {
+    
+    let hajoReszIndex = 0;
+    let keretek = [];
+    
     switch (hosszaban) {
         case true:
             for (var i = -1; i <= 1; i++) {
-               
                 if (ervenyesKeret(kezdoSor - 1, kezdoOszlop + i)){
-//                    classValto(sor - 1, oszlop + i, "keret foglalt");
-                    
-                    jatekosKeretek[jatekosHajoIndex][jatekosKeretIndex] = [];
-                    jatekosKeretek[jatekosHajoIndex][jatekosKeretIndex].push(kezdoSor-1 , kezdoOszlop+i);
-                    jatekosKeretIndex++;
+                    keretek[hajoReszIndex] = [];
+                    keretek[hajoReszIndex].push(kezdoSor-1 , kezdoOszlop+i);
+                    hajoReszIndex++;
                 }
-                if (ervenyesKeret(kezdoSor + hossz, kezdoOszlop + i)){
-//                    classValto(sor + hossz, oszlop + i, "keret foglalt");
-                    
-                    jatekosKeretek[jatekosHajoIndex][jatekosKeretIndex] = [];
-                    jatekosKeretek[jatekosHajoIndex][jatekosKeretIndex].push(kezdoSor + hossz , kezdoOszlop + i);
-                    jatekosKeretIndex++;    
+                if (ervenyesKeret(kezdoSor + hajoHossz, kezdoOszlop + i)){
+                    keretek[hajoReszIndex] = [];
+                    keretek[hajoReszIndex].push(kezdoSor + hajoHossz , kezdoOszlop + i);
+                    hajoReszIndex++;    
                     
                 }
-                for (var x = kezdoSor; x < kezdoSor + hossz; x++){
+                for (var x = kezdoSor; x < kezdoSor + hajoHossz; x++){
                     if (ervenyesKeret(x, kezdoOszlop + i) && i !== 0){
-                          
-                          jatekosKeretek[jatekosHajoIndex][jatekosKeretIndex] = [];
-                          jatekosKeretek[jatekosHajoIndex][jatekosKeretIndex].push(x , kezdoOszlop + i);
-                          jatekosKeretIndex++;
-//                        classValto(x, oszlop + i, "keret foglalt");
+                          keretek[hajoReszIndex] = [];
+                          keretek[hajoReszIndex].push(x , kezdoOszlop + i);
+                          hajoReszIndex++;
                      }
                  }     
                  
             }
-            console.log("jatekos keretek:");
-            console.log(jatekosKeretek);
             break;
 
         case false:
             for (var i = -1; i <= 1; i++) {
-//                if (sor + i >= 0 && sor + i < mapDivek.length) {
                     if (ervenyesKeret(kezdoSor + i, kezdoOszlop - 1)){
-//                        classValto(sor + i, oszlop - 1, "keret foglalt");
-                            
-                            jatekosKeretek[jatekosHajoIndex][jatekosKeretIndex] = [];
-                            jatekosKeretek[jatekosHajoIndex][jatekosKeretIndex].push(kezdoSor + i, kezdoOszlop - 1);
-                            jatekosKeretIndex++;
-                            
-                            
-  //                        classValto(x, oszlop + i, "keret foglalt");
-                       
+                            keretek[hajoReszIndex] = [];
+                            keretek[hajoReszIndex].push(kezdoSor + i, kezdoOszlop - 1);
+                            hajoReszIndex++;
                     }
-                    if (ervenyesKeret(kezdoSor + i, kezdoOszlop + hossz)){
-//                        classValto(sor + i, oszlop + hossz, "keret foglalt");
-                        
-                        jatekosKeretek[jatekosHajoIndex][jatekosKeretIndex] = [];
-                        jatekosKeretek[jatekosHajoIndex][jatekosKeretIndex].push(kezdoSor + i, kezdoOszlop + hossz);
-                        jatekosKeretIndex++;
+                    if (ervenyesKeret(kezdoSor + i, kezdoOszlop + hajoHossz)){
+                        keretek[hajoReszIndex] = [];
+                        keretek[hajoReszIndex].push(kezdoSor + i, kezdoOszlop + hajoHossz);
+                        hajoReszIndex++;
                         
                     }
-                    for (var x = kezdoOszlop; x < kezdoOszlop + hossz; x++) {
+                    for (var x = kezdoOszlop; x < kezdoOszlop + hajoHossz; x++) {
                         if (i !== 0 && ervenyesKeret(kezdoSor + i, x)){
-//                            classValto(sor + i, x, "keret foglalt");
-                         
-                            jatekosKeretek[jatekosHajoIndex][jatekosKeretIndex] = [];
-                            jatekosKeretek[jatekosHajoIndex][jatekosKeretIndex].push(kezdoSor + i, x);
-                            jatekosKeretIndex++;
+                            keretek[hajoReszIndex] = [];
+                            keretek[hajoReszIndex].push(kezdoSor + i, x);
+                            hajoReszIndex++;
                         }
     
                     }
-//                }
             }
             break;
     }
+    return keretek;
 }
-
-
-//
-//function kivalaszto(sor, oszlop) {
-//   eredmeny = [];
-//    eredmeny[0] = sor;
-//    eredmeny[1] = oszlop;
-//    return eredmeny;
-//    }
-//function getPalyaMeret(){
-//    return palyaMeret;
-//}
 
 function jatekIndul() {
      jatekInditas=true;
@@ -569,12 +518,11 @@ function jatekIndul() {
     }, 500);
     setTimeout(function () {
           cssBeallit("elokeszit");
-       ;0
     }, 1500);
      
     setTimeout(function () {
     cssBeallit("jatekKezdes");
-    }, 1550);
+    }, 1600);
 
 } 
 
@@ -583,110 +531,57 @@ function hajoTorlo(kiet, melyikHajo, hanyadikResze) {
     let kilottHajo = true;
     let vanmegHajo = false;
     let dbSzam;
-    switch(kiet){
-        case "jatekos":
             for (var i = 0; i < 2; i++) {
-                 jatekosHajok[melyikHajo][hanyadikResze].splice(0, 1);
+                 kiet[melyikHajo][hanyadikResze].splice(0, 1);
             }             
-            for (var i = 0; i < jatekosHajok[melyikHajo].length; i++) {
-                  if (jatekosHajok[melyikHajo][i].length > 0) 
+            for (var i = 0; i < kiet[melyikHajo].length; i++) {
+                  if (kiet[melyikHajo][i].length > 0) 
                         kilottHajo = false;
             }
-            if (kilottHajo) {
-                
-                dbSzam = jatekosHajok[melyikHajo].length;
+            if (kilottHajo) {              
+                dbSzam =kiet[melyikHajo].length;
                 for (var i = 0; i < dbSzam; i++)
-                    jatekosHajok[melyikHajo].splice(0, 1);
+                    kiet[melyikHajo].splice(0, 1);
             }
-                for (var i = 0; i < jatekosHajok.length; i++)
-                    if (jatekosHajok[i].length > 0)
-                        vanmegHajo = true;       
-   
-
-            break;
-            
-        case "ai":
-            for (var i = 0; i < 2; i++) {
-                aiHajok[melyikHajo][hanyadikResze].splice(0, 1);
-            }        
-            for (var i = 0; i < aiHajok[melyikHajo].length; i++) {
-                 if (aiHajok[melyikHajo][i].length > 0) 
-                     kilottHajo = false;
-            }
-            if (kilottHajo) {
-                dbSzam = aiHajok[melyikHajo].length;
-                for (var i = 0; i < dbSzam; i++)
-                    aiHajok[melyikHajo].splice(0, 1);
-            }
-
-            for (var i = 0; i < aiHajok.length; i++)
-                if (aiHajok[i].length > 0)
-                    vanmegHajo = true;
-    
-            
-            break;
-            
-    }
-    
+                for (var i = 0; i < kiet.length; i++)
+                    if (kiet[i].length > 0)
+                        vanmegHajo = true;           
     if (!vanmegHajo) {
         vege = true;
-    console.log("VÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉGE!!!!!!!!!!!!");
+        console.log("VÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉGE!!!!!!!!!!!!");
     }
     return kilottHajo;
 }
 
-
 // kiértékeli a találatot, visszatérési értéke attól függ, van e még része az esetleg eltalált hajónak
-//--------------- ÁT KELL ÍRNI WHILE CIKLUSSÁ, MI EZ A PAZARLÁS KÉREM?-----------
-function talalatErtekelo(kie, sor, oszlop) {
-//    let sullyedt = false;    
-    
+function talalatErtekelo(erreLottek, lehetsegesHajok, sor, oszlop) {
+    let kulsoIndex = 0;
+    let belsoIndex = 0;
+    let mehet = true;
     eredmeny = [];
-    switch(kie){
-        case "jatekos":
-        mapDivek[sor][oszlop].className += " lottekra";
-        for (var i = 0; i < jatekosHajok.length; i++) {
-            for (var e = 0; e < jatekosHajok[i].length; e++) {
-                if (jatekosHajok[i][e][0] === sor && jatekosHajok[i][e][1] === oszlop) {
-                    console.log("Hajotorlo i: " + i + "hajotorlo e: " + e);
-                    eredmeny["sullyedt"] = hajoTorlo("jatekos", i, e);                               //igaz ha elsulyedt a hajo
+        erreLottek[sor][oszlop].className += " lottekra";
+        while(mehet && kulsoIndex < lehetsegesHajok.length){
+            belsoIndex = 0;
+            while(mehet && belsoIndex < lehetsegesHajok[kulsoIndex].length){
+                if (lehetsegesHajok[kulsoIndex][belsoIndex][0] === sor && lehetsegesHajok[kulsoIndex][belsoIndex][1] === oszlop) {
+                    eredmeny["sullyedt"] = hajoTorlo(lehetsegesHajok, kulsoIndex, belsoIndex);                               //igaz ha elsulyedt a hajo  
                     eredmeny["talalt"] = true;
-                    mapDivek[sor][oszlop].className += " elTalalt";
-                    mapDivek[sor][oszlop].style.background = "red";
-                    mapDivek[sor][oszlop].innerHTML = "!";
-                    eredmeny["melyikHajo"] = i;
+                    erreLottek[sor][oszlop].className += " elTalalt";
+                    erreLottek[sor][oszlop].style.background = "red";
+                    erreLottek[sor][oszlop].innerHTML = "!";
+                    eredmeny["melyikHajo"] = kulsoIndex;
+                    mehet = false;
                 }
+                belsoIndex++;
+            }
+            kulsoIndex++;
         }
-        if (!eredmeny["talalt"] && !mapDivek[sor][oszlop].classList.contains("elTalalt"))
-            mapDivek[sor][oszlop].innerHTML = "X";
-        }
-        break;
-        case "ai":
-            aiDivek[sor][oszlop].className += " lottekra";
-            for (var i = 0; i < aiHajok.length; i++) {
-                for (var e = 0; e < aiHajok[i].length; e++) {
-                    if (aiHajok[i][e][0] === sor && aiHajok[i][e][1] === oszlop) {
-                        eredmeny["sullyedt"] = hajoTorlo("ai", i, e);                            //igaz ha elsulyedt a hajo
-                        eredmeny["talalt"] = true;
-                        eredmeny["melyikHajo"] = i;
-                        aiDivek[sor][oszlop].className += " elTalalt";
-                        aiDivek[sor][oszlop].style.background = "red";
-                        aiDivek[sor][oszlop].innerHTML = "!";
-                    }
-                }
-                if (!eredmeny["talalt"] && !aiDivek[sor][oszlop].classList.contains("elTalalt"))
-                     aiDivek[sor][oszlop].innerHTML = "X";
-                
-        }
-        break;
-    }
-    return eredmeny;
+        if (!eredmeny["talalt"] && !erreLottek[sor][oszlop].classList.contains("elTalalt"))
+            erreLottek[sor][oszlop].innerHTML = "X";
+        return eredmeny;
 }
 
-function keretKirajzolo(jatekosHajoIndex){
-    for (var i = 0; i < jatekosKeretek[jatekosHajoIndex].length; i++) {
-        classValto(jatekosKeretek[jatekosHajoIndex][i][0], jatekosKeretek[jatekosHajoIndex][i][1], "keret foglalt");
-//console.log(jatekosKeretek[jatekosHajoIndex][i]);
-        
-    }
+function keretKirajzolo(){
+    for (var i = 0; i < jatekosKeretek[jatekosKeretIndex].length; i++) 
+        classValto(jatekosKeretek[jatekosKeretIndex][i][0], jatekosKeretek[jatekosKeretIndex][i][1], "keret foglalt");
 }

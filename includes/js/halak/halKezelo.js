@@ -9,7 +9,8 @@
     
 //    console.log("halátadás: " + halacskak[0].style.top);
     let halaim = [];
-    let fps = Math.floor(1000/40);    
+    let fps = 5;    
+//    let fps = Math.floor(1000/10);    
     let x = 0;
     let y = 0;
     halElhelyez();
@@ -25,7 +26,7 @@
         for (var i = 0; i < halacskak.length; i++) {
             
              halaim.push(new Hal(halacskak[i]));
-            itemAtHelyez(halacskak[i], "halusztato")
+            itemAtHelyez(halacskak[i], "halusztato");
         
         }
 //        itemAtHelyez(vilagitosHal, "halusztato");
@@ -45,14 +46,19 @@
 
    
  
-    function animalasok(){
-        for (var i = 0; i < halaim.length; i++) {
-        halaim[i].anim(x, y);
-  
+     function animalasok(){
+       
+//    vilagitosHal.kovet(x, y);
+//        setTimeout(animalasok, fps);   
+        let timer = setInterval(function() {
+             for (var i = 0; i < halaim.length; i++) {
+                 halaim[i].anim(x, y);
+              }
+        }, 20);
     }
 //    vilagitosHal.kovet(x, y);
-        setTimeout(animalasok, fps);   
-    }
+//        setTimeout(animalasok, fps);   
+//    }
     
 
 //     let ujY = 0;

@@ -1,0 +1,19 @@
+#jatekosPalyaKeret{
+    margin:auto;
+    margin-top:10vh;
+    margin-left:0px;
+    transform: 
+        translateX(-50%);
+}
+
+#aiPalyaKeret{
+    margin : 20vh auto auto auto;
+    transform:
+        translateX(60%);
+    z-index:-1;
+    opacity: 0%;
+}
+
+#reset{
+    transition: 1s;
+}

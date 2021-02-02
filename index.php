@@ -2,12 +2,12 @@
         <?php
         
         
-        echo file_get_contents('templates/head.tpl');
-        echo file_get_contents('templates/topAnimacio.tpl');
-        echo file_get_contents('templates/menu.tpl');
-        echo file_get_contents('templates/bejelentkezes.tpl');
-        echo file_get_contents('templates/elsoReteg.tpl');
-        echo file_get_contents('templates/harmadikReteg.tpl');
-        echo file_get_contents('templates/lorem.tpl');
+        echo file_get_contents('templates/fooldal/head.tpl');
+        echo file_get_contents('templates/animaciok/topAnimacio.tpl');
+        echo file_get_contents('templates/fooldal/menu.tpl');
+        echo file_get_contents('templates/bejelentkezes/bejelentkezes.tpl');
+        echo file_get_contents('templates/fooldal/elsoReteg.tpl');
+        echo file_get_contents('templates/fooldal/halas.tpl');
+        echo file_get_contents('templates/fooldal/lorem.tpl');
         include "includes/php/halFunkciok.php";
         
