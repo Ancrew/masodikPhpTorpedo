@@ -45,7 +45,7 @@
     
 #kozosKeret{
    grid-template-columns:1fr;
-   grid-template-rows:repeat(2, 1fr);
+   grid-template-rows:repeat(2, 50vh);
 }
 #jatekosPalyaKeret{
     transform:
@@ -59,7 +59,7 @@
     min-width:25vw;
     min-height:25vw;
     grid-column:2/3;
-    grid-row:2/3; 
+    grid-row:1/2; 
     margin:auto auto auto auto !important;
     /*font-size:14px;*/
 }
@@ -82,7 +82,7 @@
 #aiPalyaKeret{
     margin-top:10vh;
     grid-column:1/2;
-    grid-row:1/2;
+    grid-row:2/3;
     transform:
         translateX(0%) !important;
     margin:10vh auto 20vh auto !important;

@@ -37,6 +37,7 @@ let resetelo = document.getElementById("reset");
 let indul = document.getElementById("indul");
 let gombok = document.getElementById("gombok");
 
+let mobil = window.matchMedia("(max-width: 1100px)");
 init();
 
 function init() {
@@ -159,8 +160,13 @@ function cssBeallit(melyiket) {
         case keret:
             keret.style.gridTemplateColumns = "1fr " + palyaMeret + "fr";
             keret.style.gridTemplateRows = "1fr " + palyaMeret + "fr 5fr 1fr";
-            keret.style.width = 2 * (1 + palyaMeret) + "vw";
-            keret.style.height = 2 * (8 + palyaMeret) + "vw";
+            keret.style.width = 1.5 * (1 + palyaMeret) + "vw";
+            keret.style.height = 1.5 * (8 + palyaMeret) + "vw";
+            
+            if(mobil.matches){
+                keret.style.width = 5 * (1 + palyaMeret) + "vw";
+                keret.style.height = 5 * (8 + palyaMeret) + "vw"
+            }
             break;
         case tartalmazo:
             tartalmazo.style.gridTemplateRows = "repeat(" + palyaMeret + ", 1fr)";

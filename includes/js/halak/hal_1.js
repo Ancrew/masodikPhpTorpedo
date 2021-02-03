@@ -17,17 +17,16 @@
          this.z = 0;                                                            //Z-index, aki hátrébb van kerüüljön alacsonyabb számú rétegbe is.
          this.x = this.getUjX();
          this.y = this.getUjY();
-         this.halam.style.left = this.x  + '%';
-         this.halam.style.top = this.y +  '%';
-         this.maxSebesseg = 0.1;
-         this.minSebesseg = 0.02;
-         this.ujX = 0;
+         this.halam.style.left = this.x  + 'px';
+         this.halam.style.top = this.y +  'px';
+         this.maxSebesseg = 2.0;
+         this.minSebesseg = 0.2;
 //         this.maxSebesseg = Math.random() * + 1.5;
 //         this.minSebesseg = Math.random() * + 0.2;
 //         this.maxSebesseg = Math.random() * 4 + 1;
 //         this.minSebesseg = Math.random() * 1 + 1;
          this.forgasSebesseg = Math.random() * 4 + 1;
-         this.tavolodasSebesseg = 0.001;
+         this.tavolodasSebesseg = 0.02;
          this.halSebessegX = this.maxSebesseg;
          this.halSebessegY = this.getUjY();
          this.szog = 0;
@@ -84,60 +83,67 @@
             getUjX(){
                 
                 
-              return (Math.random() * 30 + 2 + ((this.halIndex * this.halW)/10)) * -1;
+              return (Math.random() * 60 + 50 + (this.halIndex * (3 * this.halW))) * -1;
 //              return (Math.random() * 60 + 50) - (this.halIndex * this.halW);
             }
             
             //Halak mozgatása
              anim(x, y, i){
                     this.hatoTavban(x, y);
-                    this.halXMozgas();
+                    let ujX=this.halXMozgas();
 //                    this.halam.style.left = ujX+"px";
  //                       if(this.getPos("x") > window.innerWidth){                //ha kiúúszik a hal a képernyőről újra pozícionálja
                    
-                       if(this.ujX > 100){
+                       if(ujX > this.intInner){
                             
                             this.halSebessegY =  this.getUjY();
                             this.meretBeallit();
-                            this.maxSebesseg = 0.1;
+                            this.maxSebesseg = 2;
                             
                             this.halSebessegX = this.maxSebesseg;
-                            this.minSebesseg = 0.02;
+                            this.minSebesseg = 1
                             let kezdoX = this.getUjX(i);          
  //                           this.el=false;
-                            this.halam.style.left = kezdoX+"%";
-                            this.ujX=kezdoX;
+                            this.halam.style.left = kezdoX+"px";
                         }           
-                        this.forgasMero(y);
+//                        this.forgasMero(y);
                         let szogString="rotate("+this.szog+"deg)";              //Összerakja a forgatáshoz szükséges karaktersorozatot.
-                        this.halam.style.transform = szogString;         
-                        this.halam.style.top = this.halSebessegY;
-                        this.meretezo();
-                        let scaleString = " scale(" + this.aktMeret + ")";
-                        this.halam.style.transform += scaleString;
-                        let rotateXString = " rotateX(" + this.forgasok + "deg)";
-                        let rotateYString = " rotateY(" + this.forgasok + "deg)";
-                        let rotateZString = " rotateZ(" + this.forgasok + "deg)";
-                        this.halam.style.transform += rotateXString;
-                        this.halam.style.transform += rotateYString;
-                        this.halam.style.transform += rotateZString;
-                        this.halam.style.zIndex += this.z;
+//                        this.halam.style.transform = szogString;         
+//                        this.halam.style.top = this.halSebessegY;
+//                        this.meretezo();
+//                        let scaleString = " scale(" + this.aktMeret + ")";
+//                        this.halam.style.transform += scaleString;
+//                        let rotateXString = " rotateX(" + this.forgasok + "deg)";
+//                        let rotateYString = " rotateY(" + this.forgasok + "deg)";
+//                        let rotateZString = " rotateZ(" + this.forgasok + "deg)";
+//                        this.halam.style.transform += rotateXString;
+//                        this.halam.style.transform += rotateYString;
+//                        this.halam.style.transform += rotateZString;
+//                        this.halam.style.zIndex += this.z;
                         
 //                    
             }
             
             
             //Ellenőrzi a hal régi x pozicícióját, és megadja hozzá viszonyítva az újat.
-             halXMozgas(){ 
+             halXMozgas(){
+                       let regiX = this.halam.style.left;         
+                       
+                       let xInt = this.tisztitott(regiX);
+                       console.log(xInt);
                        if(this.mehet && this.halSebessegX > this.minSebesseg){
                                 this.halSebessegX -= this.tavolodasSebesseg;
                        }
                        else if(this.halSebessegX < this.minSebesseg){
+                           //this.halSebessegX += this.tavolodasSebesseg;
                            this.halSebessegX = this.minSebesseg;
                        }
-                       this.ujX += this.halSebessegX;
-                       this.x = this.ujX;
-                       this.halam.style.left=this.x + "%";
+//                       this.halSebessegX = Math.
+                       console.log(this.halSebessegX);
+                       let ujX = xInt + this.halSebessegX;
+                       this.x = ujX;
+                       this.halam.style.left=this.x + "px";
+                       return ujX;
                }
                
             halYMozgas(erre){
@@ -160,7 +166,7 @@
          
               //Megkap egy stílus értéket aminek az utolsó 2 karakterét(általában px vagy pt-t) levágja és visszaadja a számot előtte, int-ként.
              tisztitott(tisztitando){
-                let tisztitott = parseInt(tisztitando.substr(0,(tisztitando.length-1)));
+                let tisztitott = parseInt(tisztitando.substr(0,(tisztitando.length-2)));
                 return tisztitott;
             }
             
@@ -219,10 +225,10 @@
              meretezo(){
                 if(this.mehet){ 
                  if(this.aktMeret > this.celMeret){
-                    let tavolodasSebesseg = Math.random() * 0.035; 
+                    let tavolodasSebesseg = Math.random() * 0.15; 
                     if(this.maxSebesseg > this.minSebesseg){
-                        this.maxSebesseg -= this.tavolodasSebesseg;
-                        this.halSebessegX -= this.tavolodasSebesseg;
+                        this.maxSebesseg -= 0.2;
+                        this.halSebessegX -= 0.16;
                     }
                     else{
                         this.maxSebesseg = this.minSebesseg;

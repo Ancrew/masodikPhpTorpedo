@@ -1,6 +1,6 @@
 <?php
 
-$raj = 60;                                                                      //maxhalak Száma
+$raj = 40;                                                                      //maxhalak Száma
 $halacskam = file_get_contents('svg/halacskaS.svg');
 
 for ($i = 0; $i < $raj; $i++){     

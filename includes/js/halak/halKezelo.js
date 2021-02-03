@@ -5,16 +5,17 @@
     let halH = 9;
     let halW = 24;
     let halacskak = document.getElementsByClassName('halacska');
+//    let halacskakTeszt = document.getElementsByClassName('halacskaa');
 //    let vilagitosHal = new VilagitoHal();
     
 //    console.log("halátadás: " + halacskak[0].style.top);
     let halaim = [];
-    let fps = 5;    
+    let idokoz = 10;    
 //    let fps = Math.floor(1000/10);    
     let x = 0;
     let y = 0;
     halElhelyez();
-    setTimeout(animalasok, fps); 
+    setTimeout(animalasok, idokoz); 
  
    document.body.addEventListener("mousemove", e => {
                      x = e.clientX;
@@ -25,7 +26,7 @@
    function halElhelyez(){  
         for (var i = 0; i < halacskak.length; i++) {
             
-             halaim.push(new Hal(halacskak[i]));
+             halaim.push(new Hal(halacskak[i], i));
             itemAtHelyez(halacskak[i], "halusztato");
         
         }
@@ -50,11 +51,11 @@
        
 //    vilagitosHal.kovet(x, y);
 //        setTimeout(animalasok, fps);   
-        let timer = setInterval(function() {
+        setInterval(function() {
              for (var i = 0; i < halaim.length; i++) {
-                 halaim[i].anim(x, y);
+                 halaim[i].anim(x, y, i);
               }
-        }, 20);
+        }, idokoz);
     }
 //    vilagitosHal.kovet(x, y);
 //        setTimeout(animalasok, fps);   

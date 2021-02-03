@@ -1,34 +1,43 @@
-.halkep{
-    /*animation: uszas 1s linear infinite;*/
+/*.halkep{
+    animation: uszas 1s linear infinite;
 }
 
+*/
+.halacskaa{
+    position:relative;
+/*    left:0px;
+    padding:0px;
+    margin:0px;
+    transform:translateX(-100%);*/
+}
 .halacska{
     position:relative;
     /*display:inline-block;*/
      /*transition: 2s ease-in;*/
-    /*transform:*/ 
-        /*translateX(0);*/
+/*    transform: 
+        translateX(0);*/
    
     /*animation: halAmeret 2s linear infinite;*/
 }
+/*
 .forgoHal{
     animation: elfordul 3s ease-in;
 }
-/*.halReset{
+.halReset{
     position:relative;
     
     transform: 
         translateX(0);
    
-    animation: halAtuszas 10s linear infinite;*/
-/*}
+    animation: halAtuszas 10s linear infinite;
+}
 .kitero{
     transition: 3s ease-in-out;
     transform: 
         
        translate3d(20.7rem, -2rem, 50rem);
     
-}*/
+}
 
 @keyframes {
     0%{
@@ -59,11 +68,12 @@
     }
 }
 
-@keyframes halAmeret{
+*/
+/*@keyframes halAmeret{
     from {
    transform: scale(1.0);
     }
     to{
         transform:scale(0.2);
     }
-}
+}*/
